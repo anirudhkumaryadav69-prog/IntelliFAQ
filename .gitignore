@@ -1,0 +1,64 @@
+# Python & Backend Virtual Environment
+backend/venv/
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Node & Frontend Dependencies / Build Outputs
+frontend/node_modules/
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+dist/
+dist-ssr/
+build/
+*.local
+
+# SQLite Databases & Local Instance Data
+backend/instance/
+instance/
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# Uploaded Private Documents & User-Generated Uploads
+backend/instance/uploads/
+uploads/
+
+# Environment & Secret Configuration
+.env
+.env.*
+!.env.example
+
+# Logs, Backups & Temporary Files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.tmp
+*.bak
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor Local Configuration
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,1102 @@
+[
+  {
+    "id": 1,
+    "category": "Admissions",
+    "question": "What are the admission requirements for undergraduate programs?",
+    "alternative_questions": [
+      "How do I qualify for undergraduate admission?",
+      "What are the eligibility criteria for joining a bachelor's course?",
+      "Admission requirements and eligibility for new applicants"
+    ],
+    "answer": "[Sample Information] Undergraduate admission generally requires completion of higher secondary education from a recognized board and fulfillment of program-specific prerequisites. Please consult the official Admissions Prospectus or contact the Admissions Office for the exact eligibility criteria for your chosen program."
+  },
+  {
+    "id": 2,
+    "category": "Admissions",
+    "question": "How can I apply for admission online?",
+    "alternative_questions": [
+      "What is the procedure to submit an online admission form?",
+      "Steps to apply through the university admission portal",
+      "Where do I fill out the application form for admission?"
+    ],
+    "answer": "[Sample Information] Applicants can register on the official University Admissions Portal, complete the online application form, upload scanned academic transcripts, and submit the application fee. Refer to the official admissions webpage for the active portal link and step-by-step instructions."
+  },
+  {
+    "id": 3,
+    "category": "Admissions",
+    "question": "What documents are required during the admission verification process?",
+    "alternative_questions": [
+      "Which original certificates do I need to bring for admission?",
+      "List of documents needed for admission counseling",
+      "What paperwork is required to confirm my admission?"
+    ],
+    "answer": "[Sample Information] Typically required documents include official academic mark sheets, transfer or migration certificates, government-issued photo identification, and recent passport-sized photographs. Please check the official admission offer letter or contact the Admissions Office for the verified document checklist."
+  },
+  {
+    "id": 4,
+    "category": "Admissions",
+    "question": "When is the last date to submit the admission application form?",
+    "alternative_questions": [
+      "What is the admission application deadline?",
+      "Until when are admission forms accepted?",
+      "Closing date for new admission registrations"
+    ],
+    "answer": "[Sample Information] Application deadlines vary by academic session and program level. Please refer to the official Academic Calendar or the Admissions Notice Board on the institution's website for current opening and closing dates."
+  },
+  {
+    "id": 5,
+    "category": "Admissions",
+    "question": "Is an entrance examination required for admission?",
+    "alternative_questions": [
+      "Do I need to take an entrance test to get admitted?",
+      "Are admissions based on merit or entrance exam scores?",
+      "Which entrance exams are accepted for admission?"
+    ],
+    "answer": "[Sample Information] Depending on the department and program, selection may be based on national/state entrance test scores, an institutional entrance examination, or qualifying academic merit. Please verify the specific selection criteria in the official program brochure."
+  },
+  {
+    "id": 6,
+    "category": "Admissions",
+    "question": "How can I check the status of my submitted admission application?",
+    "alternative_questions": [
+      "Where can I track my application form status?",
+      "How do I know if my admission application is approved?",
+      "Track admission application progress online"
+    ],
+    "answer": "[Sample Information] You can track your application status by logging into the Admissions Applicant Dashboard using your registered credentials. For further assistance, please reach out to the Admissions Helpdesk."
+  },
+  {
+    "id": 7,
+    "category": "Admissions",
+    "question": "Can I apply for lateral entry or credit transfer from another institution?",
+    "alternative_questions": [
+      "What is the process for lateral entry admission?",
+      "How do I transfer from another university to this institution?",
+      "Are diploma holders eligible for direct second-year admission?"
+    ],
+    "answer": "[Sample Information] Lateral entry and inter-institutional credit transfers are subject to academic equivalence review and seat availability. Interested candidates should contact the Admissions Office and the Academic Registrar for official transfer policy guidelines."
+  },
+  {
+    "id": 8,
+    "category": "Admissions",
+    "question": "How can I correct an error in my submitted application form?",
+    "alternative_questions": [
+      "I made a mistake on my admission form, how do I edit it?",
+      "Can I update my personal details after submitting the application?",
+      "When does the application correction window open?"
+    ],
+    "answer": "[Sample Information] If an application correction window is announced, applicants can edit permitted fields through the online portal. Otherwise, please submit a written request with supporting documents to the Admissions Office."
+  },
+  {
+    "id": 9,
+    "category": "Admissions",
+    "question": "What is the admission procedure for international or NRI students?",
+    "alternative_questions": [
+      "How do foreign nationals apply for admission?",
+      "Are there separate admission guidelines for international applicants?",
+      "International student application requirements and visa support"
+    ],
+    "answer": "[Sample Information] International applicants generally apply through the International Affairs or Foreign Students Cell, providing equivalence certificates, passport copies, and proficiency documentation where applicable. Please consult the International Admissions section on the official website."
+  },
+  {
+    "id": 10,
+    "category": "Admissions",
+    "question": "How are merit lists and counseling rounds conducted?",
+    "alternative_questions": [
+      "When will the admission merit list be published?",
+      "How does the seat allotment and counseling process work?",
+      "Where can I view the selection list for admissions?"
+    ],
+    "answer": "[Sample Information] Merit lists and counseling schedules are published in phases on the official Admissions Portal. Shortlisted candidates receive instructions regarding document verification and provisional seat confirmation through official notices."
+  },
+  {
+    "id": 11,
+    "category": "Admissions",
+    "question": "Can I apply for more than one academic program at the same time?",
+    "alternative_questions": [
+      "Is it allowed to select multiple course preferences during admission?",
+      "How do I apply for two different departments?",
+      "Multiple program selection in the admission portal"
+    ],
+    "answer": "[Sample Information] The admission portal typically allows candidates to list multiple program preferences or submit separate applications depending on the faculty stream. Please review the official application instructions for preference selection rules."
+  },
+  {
+    "id": 12,
+    "category": "Admissions",
+    "question": "What should I do if I do not have my final semester mark sheet at the time of application?",
+    "alternative_questions": [
+      "Can students awaiting final exam results apply for admission?",
+      "Provisional admission for candidates whose results are pending",
+      "How to apply if my board or degree results are not declared yet?"
+    ],
+    "answer": "[Sample Information] Candidates awaiting final qualifying examination results may generally apply provisionally by uploading previous semester transcripts or a bonafide certificate. Final admission remains subject to submitting official passing certificates by the date specified by the Admissions Office."
+  },
+  {
+    "id": 13,
+    "category": "Admissions",
+    "question": "How do I withdraw my admission and request my original documents back?",
+    "alternative_questions": [
+      "What is the procedure to cancel my admission?",
+      "How can I withdraw my seat after provisional admission?",
+      "Process for admission cancellation and document return"
+    ],
+    "answer": "[Sample Information] To withdraw an admission, applicants must submit a formal withdrawal request through the Admissions Portal or in person at the Admissions Office along with the provisional admission receipt. Refer to the official Admission Cancellation Policy for processing timelines."
+  },
+  {
+    "id": 14,
+    "category": "Admissions",
+    "question": "Is there an age limit or gap-year restriction for admission?",
+    "alternative_questions": [
+      "Can I get admission if I have a gap year after high school?",
+      "What documents are needed for gap year students during admission?",
+      "Are there age criteria for applying to courses?"
+    ],
+    "answer": "[Sample Information] Age criteria and gap-year documentation requirements depend on the regulatory body governing the specific program. Applicants with an academic gap are often asked to provide a gap certificate or declaration; please confirm requirements with the Admissions Office."
+  },
+  {
+    "id": 15,
+    "category": "Admissions",
+    "question": "Can I change my branch or program after admission is confirmed?",
+    "alternative_questions": [
+      "How do I request a course or department change after joining?",
+      "Is branch sliding allowed after the first semester?",
+      "Procedure for changing academic stream post-admission"
+    ],
+    "answer": "[Sample Information] Program or branch changes, if permitted by institutional norms, depend on seat vacancies, eligibility criteria, and approval from the Dean of Academics. Please consult the Academic Registrar's Office for official policies."
+  },
+  {
+    "id": 16,
+    "category": "Fee Payment",
+    "question": "How can I pay my semester tuition fees?",
+    "alternative_questions": [
+      "What are the accepted modes of fee payment?",
+      "How do I pay college fees online?",
+      "Can I pay my semester fees through UPI, net banking, or card?"
+    ],
+    "answer": "[Sample Information] Semester tuition fees can typically be paid through the online Student ERP/Finance Portal using digital payment modes (such as Net Banking, Debit/Credit Card, or UPI) or via authorized bank challan/demand draft. Please check the Finance Office notice for approved payment gateways."
+  },
+  {
+    "id": 17,
+    "category": "Fee Payment",
+    "question": "Where can I find the official fee structure for my course?",
+    "alternative_questions": [
+      "How much is the semester tuition fee for my program?",
+      "Where is the detailed fee breakdown published?",
+      "What are the annual tuition and laboratory fees?"
+    ],
+    "answer": "[Sample Information] Exact fee structures vary by program, batch, and admission category. This chatbot uses a demonstration dataset and does not store official fee figures; please view the verified Fee Schedule on the official university website or contact the Finance & Accounts Office."
+  },
+  {
+    "id": 18,
+    "category": "Fee Payment",
+    "question": "What is the deadline for paying semester fees?",
+    "alternative_questions": [
+      "When is the last date for tuition fee payment?",
+      "Due date for paying current semester fees",
+      "Until when can I pay my fees without a late fine?"
+    ],
+    "answer": "[Sample Information] Fee payment due dates are announced prior to the start of each semester via official circulars from the Finance & Accounts Office. Please check your Student Portal notifications or the official notice board for the current semester's deadline."
+  },
+  {
+    "id": 19,
+    "category": "Fee Payment",
+    "question": "How do I download my fee payment receipt?",
+    "alternative_questions": [
+      "Where can I get the receipt after paying my fees online?",
+      "How to generate a duplicate fee receipt from the student portal?",
+      "Download tuition fee invoice and confirmation receipt"
+    ],
+    "answer": "[Sample Information] After an online payment is processed, a digital fee receipt is generally available for download in the 'Fee History' or 'Receipts' section of the Student Portal. If the receipt does not appear, please contact the Accounts Office with your transaction reference ID."
+  },
+  {
+    "id": 20,
+    "category": "Fee Payment",
+    "question": "What should I do if my online fee payment fails but the amount is debited from my bank account?",
+    "alternative_questions": [
+      "Money was deducted from my bank but fee status shows unpaid",
+      "How to resolve a failed fee transaction?",
+      "Who do I contact for double deduction or pending fee payment status?"
+    ],
+    "answer": "[Sample Information] If an amount is debited during a failed transaction, wait for the payment gateway reconciliation period before attempting another payment. Keep your bank transaction reference number and email or visit the Finance & Accounts Office to verify and update the payment status."
+  },
+  {
+    "id": 21,
+    "category": "Fee Payment",
+    "question": "Can I pay my semester tuition fees in installments?",
+    "alternative_questions": [
+      "Is there an option for part payment or installment of fees?",
+      "How do I apply for a fee installment plan?",
+      "Can I split my tuition fee into two payments?"
+    ],
+    "answer": "[Sample Information] Installment or deferred payment requests are subject to institutional policy and approval by the Finance Officer or Dean of Student Welfare. Students seeking installment permission should submit a formal application to the Accounts Office well before the fee due date."
+  },
+  {
+    "id": 22,
+    "category": "Fee Payment",
+    "question": "What is the fee refund policy if I withdraw my admission?",
+    "alternative_questions": [
+      "How much fee is refunded upon admission cancellation?",
+      "When will I receive my fee refund after withdrawing?",
+      "Rules for tuition and caution deposit refund"
+    ],
+    "answer": "[Sample Information] Fee refunds upon withdrawal are governed by regulatory guidelines and institutional refund policies based on the date of cancellation. Please refer to the official Fee Refund Policy document or consult the Finance & Accounts Office for exact terms."
+  },
+  {
+    "id": 23,
+    "category": "Fee Payment",
+    "question": "Is there a late fee or penalty for paying tuition fees after the deadline?",
+    "alternative_questions": [
+      "What happens if I miss the fee payment deadline?",
+      "How much is the late fine for delayed fee payment?",
+      "Can late fee charges be waived?"
+    ],
+    "answer": "[Sample Information] Payments made after the official deadline may attract late charges as specified in the semester fee circular. For exact late fee rules or to request a waiver due to genuine hardship, please contact the Finance & Accounts Office."
+  },
+  {
+    "id": 24,
+    "category": "Fee Payment",
+    "question": "How can I get a fee demand letter or bonafide fee structure for an education loan?",
+    "alternative_questions": [
+      "Documents required from the college for a bank education loan",
+      "Where do I request a fee estimation certificate for a bank loan?",
+      "Can the university pay portal accept direct disbursement from a bank loan?"
+    ],
+    "answer": "[Sample Information] Students applying for an education loan can request an official Fee Estimation Certificate or Demand Letter from the Finance & Accounts Office. The certificate includes institutional bank details required for direct loan disbursement."
+  },
+  {
+    "id": 25,
+    "category": "Fee Payment",
+    "question": "Are hostel, mess, and transportation fees paid separately from tuition fees?",
+    "alternative_questions": [
+      "Do I pay hostel and bus fees in the same portal as tuition?",
+      "Are residential and transport charges included in the academic fee?",
+      "How to pay hostel and mess charges?"
+    ],
+    "answer": "[Sample Information] Auxiliary services such as hostel accommodation, mess dining, and campus bus transport are generally billed separately from academic tuition fees. Please check the respective section on the Student Portal or contact the Hostel/Transport Office for billing details."
+  },
+  {
+    "id": 26,
+    "category": "Fee Payment",
+    "question": "How do I claim a refund of my caution money or security deposit after graduation?",
+    "alternative_questions": [
+      "Procedure to get back library and laboratory security deposit",
+      "When is the refundable caution deposit returned to students?",
+      "No-dues clearance for caution deposit refund"
+    ],
+    "answer": "[Sample Information] Refundable security or caution deposits are processed after a student completes the program and submits a cleared No-Dues Certificate from all departments (Library, Labs, Hostel, and Accounts). Contact the Finance Office for the refund claim form."
+  },
+  {
+    "id": 27,
+    "category": "Fee Payment",
+    "question": "How are fees adjusted for students receiving government scholarships or fee waivers?",
+    "alternative_questions": [
+      "Do scholarship students have to pay full tuition fees upfront?",
+      "How is scholarship reimbursement adjusted against semester fees?",
+      "Fee payment rules for tuition fee waiver (TFW) category students"
+    ],
+    "answer": "[Sample Information] Fee adjustments for scholarship or Tuition Fee Waiver (TFW) recipients depend on the specific scheme and government disbursement procedure. Please verify your applicable fee balance with the Scholarship Cell and the Accounts Office."
+  },
+  {
+    "id": 28,
+    "category": "Fee Payment",
+    "question": "Where do I pay examination fees or backlog paper registration fees?",
+    "alternative_questions": [
+      "Are semester exam fees separate from tuition fees?",
+      "How to pay supplementary or re-evaluation exam fees?",
+      "Online payment for end-semester examination form"
+    ],
+    "answer": "[Sample Information] Examination registration, supplementary exam, and revaluation fees are typically collected through the Examination Portal when exam forms are released. Refer to the circular issued by the Controller of Examinations for fee details."
+  },
+  {
+    "id": 29,
+    "category": "Fee Payment",
+    "question": "Can I pay my fees via Demand Draft (DD) or NEFT/RTGS bank transfer?",
+    "alternative_questions": [
+      "What are the bank account details for NEFT fee transfer?",
+      "In whose favor should the Demand Draft for fees be drawn?",
+      "Offline fee payment through bank challan or DD"
+    ],
+    "answer": "[Sample Information] If offline or NEFT/RTGS payment is permitted, students must use the official beneficiary details specified in the Finance Office brochure and submit the UTR/DD details at the Accounts Counter for verification."
+  },
+  {
+    "id": 30,
+    "category": "Fee Payment",
+    "question": "How can I check if I have any pending fee dues before exam registration?",
+    "alternative_questions": [
+      "Where can I view my outstanding fee balance?",
+      "How to get Accounts No-Dues clearance for hall ticket?",
+      "Check pending dues in the student portal"
+    ],
+    "answer": "[Sample Information] You can view your current ledger, paid receipts, and any outstanding balance under the 'Fee Dues' tab on the Student ERP Portal. If you find any discrepancy, please visit the Finance & Accounts Office."
+  },
+  {
+    "id": 31,
+    "category": "Attendance",
+    "question": "What is the minimum attendance policy required to appear for semester examinations?",
+    "alternative_questions": [
+      "How much attendance percentage is mandatory for exams?",
+      "What are the attendance rules for theory and lab classes?",
+      "Minimum required attendance criteria for students"
+    ],
+    "answer": "[Sample Information] Institutions enforce a mandatory minimum attendance requirement across theory and practical courses for examination eligibility. Because exact percentage thresholds are set by official academic regulations, please check your Student Handbook or consult your Department Academic Coordinator."
+  },
+  {
+    "id": 32,
+    "category": "Attendance",
+    "question": "Where can I check my current subject-wise attendance record?",
+    "alternative_questions": [
+      "How do I view my daily or monthly attendance online?",
+      "Where is student attendance updated on the portal?",
+      "Check course attendance percentage in Student ERP"
+    ],
+    "answer": "[Sample Information] Subject-wise attendance records are updated by faculty members on the Student ERP Portal. Log in to your student account and navigate to the 'Attendance' module to review your lecture and lab attendance."
+  },
+  {
+    "id": 33,
+    "category": "Attendance",
+    "question": "What is the procedure for applying for medical leave or attendance condonation?",
+    "alternative_questions": [
+      "How do I submit a medical certificate for missed classes?",
+      "Can I get attendance relaxation if I was hospitalized or sick?",
+      "Rules for medical condonation of attendance shortage"
+    ],
+    "answer": "[Sample Information] Students who miss classes due to medical reasons should submit a formal leave application along with verified medical certificates to their Head of Department or Academic Office within the timeframe specified in the academic regulations."
+  },
+  {
+    "id": 34,
+    "category": "Attendance",
+    "question": "How do I get duty leave or attendance credit when representing the institution at events?",
+    "alternative_questions": [
+      "Will I get attendance for participating in sports, hackathons, or cultural fests?",
+      "What is the On-Duty (OD) attendance approval process?",
+      "How to apply for OD leave for academic conferences or competitions?"
+    ],
+    "answer": "[Sample Information] Students representing the institution in approved academic, sports, or cultural events can apply for On-Duty (OD) attendance prior to the event. The OD form must be endorsed by the faculty coordinator and approved by the Head of Department."
+  },
+  {
+    "id": 35,
+    "category": "Attendance",
+    "question": "What happens if my attendance falls short of the required minimum criteria?",
+    "alternative_questions": [
+      "Consequences of having low attendance in a semester",
+      "Will my exam hall ticket be withheld due to attendance shortage?",
+      "What is the detention policy for low attendance?"
+    ],
+    "answer": "[Sample Information] Students who do not meet the prescribed attendance criteria (after accounting for any approved condonation) may be detained from appearing in end-semester examinations for the affected course(s). Please consult your Faculty Advisor or the Academic Office immediately if your attendance is low."
+  },
+  {
+    "id": 36,
+    "category": "Attendance",
+    "question": "How can I get a correction made if my attendance was marked absent by mistake?",
+    "alternative_questions": [
+      "I was present in class but marked absent on the portal, what should I do?",
+      "Who can update an incorrect attendance entry?",
+      "Time limit for reporting attendance discrepancies"
+    ],
+    "answer": "[Sample Information] If you notice an error in your recorded attendance, contact the respective course instructor promptly after the session was logged. Faculty members can verify and rectify attendance records within the portal's permitted window."
+  },
+  {
+    "id": 37,
+    "category": "Attendance",
+    "question": "Is attendance counted separately for theory lectures and laboratory sessions?",
+    "alternative_questions": [
+      "Do I need to maintain separate attendance in lab and theory classes?",
+      "How is combined course attendance calculated?",
+      "Are practical lab sessions mandatory for attendance?"
+    ],
+    "answer": "[Sample Information] In most academic curricula, attendance is tracked independently for theory lectures, tutorials, and practical laboratory courses. Please verify the calculation method in your program's Academic Regulations document."
+  },
+  {
+    "id": 38,
+    "category": "Attendance",
+    "question": "From which date is attendance calculated for newly admitted or late-registered students?",
+    "alternative_questions": [
+      "How is attendance calculated if I joined in the second round of counseling?",
+      "Will I lose attendance for classes held before my admission date?",
+      "Attendance policy for late course registration"
+    ],
+    "answer": "[Sample Information] For students admitted in later counseling rounds, attendance is typically calculated from the official date of admission or course registration. Please confirm your effective registration date with your Department Coordinator."
+  },
+  {
+    "id": 39,
+    "category": "Attendance",
+    "question": "Does the institution send alerts if a student's attendance is running low?",
+    "alternative_questions": [
+      "How are students and parents notified about attendance shortage?",
+      "When is the monthly attendance shortage list published?",
+      "Automated notifications for low attendance"
+    ],
+    "answer": "[Sample Information] Departments generally publish periodic attendance status lists on notice boards and send alerts through the Student ERP Portal. Students are advised to monitor their portal dashboard regularly."
+  },
+  {
+    "id": 40,
+    "category": "Attendance",
+    "question": "Can I get attendance exemption while pursuing an approved semester internship?",
+    "alternative_questions": [
+      "Attendance rules for final-year students doing industry internships",
+      "Do I need to attend campus classes during an approved full-time internship?",
+      "How is attendance managed during project or internship semesters?"
+    ],
+    "answer": "[Sample Information] Final-year students undertaking credit-bearing industry internships must obtain prior approval from the Training & Placement Cell and their Head of Department. Attendance during approved internships is governed by the department's internship evaluation guidelines."
+  },
+  {
+    "id": 41,
+    "category": "Attendance",
+    "question": "Is biometric or smart-card attendance required in addition to classroom roll call?",
+    "alternative_questions": [
+      "How is student attendance recorded in classrooms?",
+      "Do I need to swipe my ID card for daily attendance?",
+      "Classroom attendance logging system"
+    ],
+    "answer": "[Sample Information] Depending on campus infrastructure, attendance may be logged by faculty directly in the ERP during class or supplemented by smart-card/biometric terminals in laboratories and hostels. Check with your department for the standard procedure."
+  },
+  {
+    "id": 42,
+    "category": "Attendance",
+    "question": "How do I apply for prior leave for personal or family emergencies?",
+    "alternative_questions": [
+      "Where do I submit a leave application for planned absence?",
+      "Does personal leave count as present in attendance?",
+      "Who approves student leave requests?"
+    ],
+    "answer": "[Sample Information] Students should inform their Class Advisor or Mentor in advance by submitting a leave application on the portal or in writing. Note that approved personal leave keeps your academic record informed, though it may still be subject to overall minimum attendance rules."
+  },
+  {
+    "id": 43,
+    "category": "Attendance",
+    "question": "Are remedial or extra classes counted toward total semester attendance?",
+    "alternative_questions": [
+      "Can I attend extra classes to make up for low attendance?",
+      "Do makeup lectures help increase my attendance percentage?",
+      "Policy on remedial classes and attendance credit"
+    ],
+    "answer": "[Sample Information] Whether makeup or remedial sessions count toward official semester attendance is determined by the Academic Council and Head of Department. Please consult your course faculty or Academic Coordinator for guidance."
+  },
+  {
+    "id": 44,
+    "category": "Attendance",
+    "question": "Is hostel night attendance separate from academic class attendance?",
+    "alternative_questions": [
+      "How does hostel roll call work for residential students?",
+      "Does hostel attendance affect my academic exam eligibility?",
+      "Rules for daily attendance in campus hostels"
+    ],
+    "answer": "[Sample Information] Hostel attendance is maintained separately by the Hostel Warden for residential safety and discipline, whereas academic attendance is tracked by departments for examination eligibility. Refer to the Hostel Rulebook for residential timings."
+  },
+  {
+    "id": 45,
+    "category": "Examinations",
+    "question": "Where can I check the upcoming semester examination schedule?",
+    "alternative_questions": [
+      "When will the exam timetable be released?",
+      "Where is the end-semester exam date sheet published?",
+      "How do I view my mid-term and final examination schedule?"
+    ],
+    "answer": "[Sample Information] Official examination timetables for mid-semester, practical, and end-semester assessments are published by the Office of the Controller of Examinations on the university website and the Student Portal. Please check the 'Examinations' notice board for current schedules."
+  },
+  {
+    "id": 46,
+    "category": "Examinations",
+    "question": "How and when can I download my examination hall ticket or admit card?",
+    "alternative_questions": [
+      "Where do I get my exam admit card?",
+      "Why am I unable to download my hall ticket from the portal?",
+      "Requirements for generating the semester examination admit card"
+    ],
+    "answer": "[Sample Information] Admit cards are released on the Student Portal prior to the start of examinations once exam registration, fee clearance, and attendance requirements are verified. If your hall ticket is blocked, please contact your Department Office or the Examination Cell."
+  },
+  {
+    "id": 47,
+    "category": "Examinations",
+    "question": "What is the weightage of internal assessments and end-semester examinations?",
+    "alternative_questions": [
+      "How are total marks divided between mid-terms, quizzes, and final exams?",
+      "What is the evaluation scheme for theory and practical subjects?",
+      "Continuous internal evaluation vs final exam marks distribution"
+    ],
+    "answer": "[Sample Information] Course evaluation typically combines Continuous Internal Evaluation (quizzes, assignments, mid-term tests) and End-Semester Examinations. Because exact weightage splits vary by curriculum and course type, please consult your official Course Syllabus."
+  },
+  {
+    "id": 48,
+    "category": "Examinations",
+    "question": "What are the passing criteria and grading system followed by the institution?",
+    "alternative_questions": [
+      "How are SGPA and CGPA calculated?",
+      "What is the minimum grade required to pass a course?",
+      "How do letter grades convert to grade points?"
+    ],
+    "answer": "[Sample Information] Most programs follow a Credit-Based Grading System using letter grades to compute Semester Grade Point Average (SGPA) and Cumulative Grade Point Average (CGPA). Please refer to your Academic Regulations Handbook for the official grade-point table and passing rules."
+  },
+  {
+    "id": 49,
+    "category": "Examinations",
+    "question": "How do I apply for paper revaluation, rechecking, or answer script viewing?",
+    "alternative_questions": [
+      "What is the procedure to challenge or re-evaluate my exam marks?",
+      "Can I see my evaluated answer sheet after results are declared?",
+      "How to submit a recounting or revaluation form?"
+    ],
+    "answer": "[Sample Information] After semester results are announced, the Controller of Examinations opens a window on the portal for answer script inspection, recounting, or revaluation. Students must submit the online request within the notified period."
+  },
+  {
+    "id": 50,
+    "category": "Examinations",
+    "question": "How do I register for supplementary or backlog examinations?",
+    "alternative_questions": [
+      "What happens if I fail a subject in the semester exam?",
+      "When are backlog and arrear exams conducted?",
+      "How to fill out the supplementary examination form?"
+    ],
+    "answer": "[Sample Information] Students with course backlogs can register for supplementary or repeat examinations when the registration notification is issued by the Examination Cell. Check the Student Portal for form submission dates and applicable rules."
+  },
+  {
+    "id": 51,
+    "category": "Examinations",
+    "question": "What should I do if I miss an examination due to a medical emergency?",
+    "alternative_questions": [
+      "Is there a makeup test if I miss my mid-term or final exam due to illness?",
+      "How to apply for a re-test on medical grounds?",
+      "Policy for missed internal or end-semester examinations"
+    ],
+    "answer": "[Sample Information] Make-up assessments for missed internal or mid-term tests may be permitted with prior intimation, verified medical documentation, and approval from the Head of Department. For missed end-semester exams, please consult the Controller of Examinations."
+  },
+  {
+    "id": 52,
+    "category": "Examinations",
+    "question": "Where and when are semester examination results published?",
+    "alternative_questions": [
+      "How can I check my semester exam results online?",
+      "When will the grades for the recent exams be declared?",
+      "Where to view grade cards on the student portal?"
+    ],
+    "answer": "[Sample Information] Official semester results and provisional grade cards are published on the Student Examination Portal once evaluation and moderation are completed. Students receive an official notification when results go live."
+  },
+  {
+    "id": 53,
+    "category": "Examinations",
+    "question": "What items are allowed and prohibited inside the examination hall?",
+    "alternative_questions": [
+      "Are scientific calculators allowed in the exam room?",
+      "Examination hall rules and code of conduct",
+      "What documents must I carry to the examination center?"
+    ],
+    "answer": "[Sample Information] Candidates must carry their valid University ID Card and official Hall Ticket. Mobile phones, smartwatches, programmable devices, and unauthorized notes are strictly prohibited. Non-programmable calculators are allowed only if specified on the question paper."
+  },
+  {
+    "id": 54,
+    "category": "Examinations",
+    "question": "How can I apply for official academic transcripts, degree certificates, or duplicate mark sheets?",
+    "alternative_questions": [
+      "Procedure to request official sealed transcripts for higher studies",
+      "How do I get a replacement if I lost my semester mark sheet?",
+      "Where can I collect my provisional degree and migration certificate?"
+    ],
+    "answer": "[Sample Information] Requests for official transcripts, provisional certificates, and duplicate grade sheets can be submitted through the Examination Section or Student Services Portal. Please contact the Office of the Controller of Examinations for document requirements and processing times."
+  },
+  {
+    "id": 55,
+    "category": "Examinations",
+    "question": "How are practical, laboratory, and viva-voce examinations scheduled?",
+    "alternative_questions": [
+      "When do lab exams and project vivas take place?",
+      "Who conducts external practical examinations?",
+      "Where is the batch-wise lab exam schedule posted?"
+    ],
+    "answer": "[Sample Information] Batch-wise schedules for laboratory assessments, project presentations, and viva-voce examinations are coordinated by individual departments and posted on department notice boards prior to or following theory exams."
+  },
+  {
+    "id": 56,
+    "category": "Examinations",
+    "question": "Is there a provision for a scribe or extra time for differently-abled students during exams?",
+    "alternative_questions": [
+      "Exam accommodations for students with disabilities or injuries",
+      "How to request compensatory time or a writer for examinations?",
+      "Accessibility support during university exams"
+    ],
+    "answer": "[Sample Information] Compensatory time and scribe facilities are provided in accordance with regulatory disability norms. Eligible students should submit an application with medical certification to the Controller of Examinations well ahead of the exam schedule."
+  },
+  {
+    "id": 57,
+    "category": "Examinations",
+    "question": "What is the policy regarding unfair means or malpractice during examinations?",
+    "alternative_questions": [
+      "What happens if a student is caught with unauthorized material in an exam?",
+      "Unfair Means Committee (UMC) rules in examinations",
+      "Penalties for academic dishonesty during tests"
+    ],
+    "answer": "[Sample Information] Any instance of unfair means or examination malpractice is reported to the Unfair Means Inquiry Committee. Depending on the severity, disciplinary actions range from paper cancellation to disciplinary suspension as defined in the Examination Ordinance."
+  },
+  {
+    "id": 58,
+    "category": "Examinations",
+    "question": "Can I appear for a grade improvement examination to increase my CGPA?",
+    "alternative_questions": [
+      "Is there an option to retake an exam to improve my grade?",
+      "Rules for grade improvement after passing a subject",
+      "How can I improve my SGPA or CGPA?"
+    ],
+    "answer": "[Sample Information] Whether grade improvement examinations are offered for already passed courses depends on the institution's academic ordinance. Please check your Academic Regulations Handbook or inquire at the Examination Cell."
+  },
+  {
+    "id": 59,
+    "category": "Examinations",
+    "question": "How do I get a name or personal detail correction on my mark sheet?",
+    "alternative_questions": [
+      "My name is misspelled on my grade card, how can I fix it?",
+      "Procedure to correct parent's name or roll number on mark sheets",
+      "Who handles corrections on official exam certificates?"
+    ],
+    "answer": "[Sample Information] To correct spelling or personal details on a grade card, submit an application along with your original mark sheet and government/high-school identity proof to the Office of the Controller of Examinations."
+  },
+  {
+    "id": 60,
+    "category": "Scholarships",
+    "question": "What types of scholarships and financial aid are available for students?",
+    "alternative_questions": [
+      "Does the institution offer merit or need-based scholarships?",
+      "What scholarship schemes can I apply for?",
+      "Financial assistance programs available for undergraduate and postgraduate students"
+    ],
+    "answer": "[Sample Information] Students may be eligible for institutional merit scholarships, need-based financial aid, and central or state government scholarship schemes. Please visit the Scholarship Cell or review the official Financial Aid page for active schemes and eligibility."
+  },
+  {
+    "id": 61,
+    "category": "Scholarships",
+    "question": "How do I apply for an institutional merit or need-based scholarship?",
+    "alternative_questions": [
+      "Where can I find the scholarship application form?",
+      "Step-by-step process to apply for college financial aid",
+      "When do scholarship applications open?"
+    ],
+    "answer": "[Sample Information] Scholarship applications are invited annually via official circulars. Eligible students must complete the application form on the Student Portal or relevant government portal and submit verified supporting documents to the Scholarship Cell."
+  },
+  {
+    "id": 62,
+    "category": "Scholarships",
+    "question": "What documents are required to apply for a scholarship?",
+    "alternative_questions": [
+      "Checklist of certificates needed for scholarship verification",
+      "Do I need an income certificate and caste certificate for scholarships?",
+      "What paperwork is needed for financial aid applications?"
+    ],
+    "answer": "[Sample Information] Commonly required documents include previous academic mark sheets, a valid family income certificate issued by a competent authority, category/domicile certificate (if applicable), bonafide student certificate, and bank passbook details. Verify scheme-specific requirements with the Scholarship Cell."
+  },
+  {
+    "id": 63,
+    "category": "Scholarships",
+    "question": "How do I get my National or State Scholarship Portal form verified by the institution?",
+    "alternative_questions": [
+      "Who is the nodal officer for NSP or state scholarship verification?",
+      "Where do I submit the hard copy of my online government scholarship form?",
+      "Institute-level verification process for government scholarships"
+    ],
+    "answer": "[Sample Information] After submitting your application on the National or State Scholarship Portal, print a copy of the application and submit it along with self-attested documents to the Institutional Scholarship Nodal Officer for online verification."
+  },
+  {
+    "id": 64,
+    "category": "Scholarships",
+    "question": "What are the criteria for renewing my scholarship in subsequent academic years?",
+    "alternative_questions": [
+      "Do I need to maintain a minimum CGPA and attendance to keep my scholarship?",
+      "Can my scholarship be cancelled if I have a backlog?",
+      "How to renew my scholarship for the next year?"
+    ],
+    "answer": "[Sample Information] Scholarship renewal generally requires maintaining satisfactory academic standing (with no active backlogs), meeting minimum attendance standards, and upholding good conduct. Please check the official terms of your specific scholarship award."
+  },
+  {
+    "id": 65,
+    "category": "Scholarships",
+    "question": "Can I avail more than one scholarship at the same time?",
+    "alternative_questions": [
+      "Is it allowed to hold both an institutional and a government scholarship?",
+      "Rules regarding multiple scholarships or stipends",
+      "Can I apply for private corporate scholarships along with state aid?"
+    ],
+    "answer": "[Sample Information] Most government and institutional tuition scholarship schemes do not permit a student to receive two concurrent major tuition fellowships from public funds. Please consult the Scholarship Cell before combining awards."
+  },
+  {
+    "id": 66,
+    "category": "Scholarships",
+    "question": "Are there special scholarships for sports achievements, cultural excellence, or defense personnel wards?",
+    "alternative_questions": [
+      "Scholarship schemes for national or state-level sports players",
+      "Financial concessions for wards of armed forces or martyrs",
+      "Does the college reward sports and extracurricular achievements with fee waivers?"
+    ],
+    "answer": "[Sample Information] Many institutions and government bodies provide dedicated scholarships or fee concessions for outstanding athletes, cultural achievers, and wards of defense personnel. Please inquire at the Student Welfare Office or Scholarship Cell for official eligibility details."
+  },
+  {
+    "id": 67,
+    "category": "Scholarships",
+    "question": "How can I check the approval and disbursement status of my scholarship?",
+    "alternative_questions": [
+      "When will the scholarship amount be credited to my account?",
+      "Where do I track my scholarship application status?",
+      "My scholarship is verified by the college, when will I receive the funds?"
+    ],
+    "answer": "[Sample Information] Government scholarship disbursements are processed directly into the student's Aadhaar-seeded bank account via Direct Benefit Transfer (DBT) and can be tracked on the respective government portal. For institutional awards, contact the Scholarship Cell or Accounts Office."
+  },
+  {
+    "id": 68,
+    "category": "Scholarships",
+    "question": "What is the Tuition Fee Waiver (TFW) or EWS scholarship scheme?",
+    "alternative_questions": [
+      "How does the Economically Weaker Section (EWS) fee waiver work?",
+      "Who is eligible for the Tuition Fee Waiver scheme?",
+      "Does TFW cover hostel and examination fees or only tuition?"
+    ],
+    "answer": "[Sample Information] Tuition Fee Waiver (TFW) schemes typically waive the academic tuition component for eligible students admitted under the designated category, while other institutional charges remain applicable. Please verify exact coverage with the Admissions and Scholarship Offices."
+  },
+  {
+    "id": 69,
+    "category": "Scholarships",
+    "question": "Are there fellowships or teaching assistantships available for postgraduate and doctoral students?",
+    "alternative_questions": [
+      "Do master's or PhD students receive a monthly stipend?",
+      "How to apply for GATE/NET fellowship or institutional research assistantship?",
+      "Financial support for postgraduate researchers"
+    ],
+    "answer": "[Sample Information] Eligible postgraduate and doctoral scholars with valid national qualifying scores or institutional assistantships may receive monthly stipends subject to departmental norms. Please contact the Dean of Research or Postgraduate Studies Office for official guidelines."
+  },
+  {
+    "id": 70,
+    "category": "Scholarships",
+    "question": "How do I obtain a Bonafide Student Certificate required for external or corporate scholarships?",
+    "alternative_questions": [
+      "Where can I request a bonafide certificate for a private scholarship?",
+      "Who signs the institutional verification form for external foundations?",
+      "Process to get bonafide certificate from the admin office"
+    ],
+    "answer": "[Sample Information] You can request a Bonafide Student Certificate through the Student Services section of the ERP Portal or at the Student Administration Desk. Once issued, the Scholarship Nodal Officer can endorse external scholarship forms."
+  },
+  {
+    "id": 71,
+    "category": "Scholarships",
+    "question": "Is there any emergency financial aid for students facing sudden family hardship?",
+    "alternative_questions": [
+      "Does the university have a student welfare or relief fund?",
+      "Financial support in case of sudden loss of an earning parent",
+      "How to request compassionate financial assistance?"
+    ],
+    "answer": "[Sample Information] Students experiencing unforeseen financial hardships may approach the Dean of Student Welfare to inquire about Student Aid Funds or compassionate fee relief provisions. All requests are reviewed confidentially by the welfare committee."
+  },
+  {
+    "id": 72,
+    "category": "Scholarships",
+    "question": "What bank account details are needed for receiving scholarship funds?",
+    "alternative_questions": [
+      "Can I give my parent's bank account for scholarship credit?",
+      "Why is Aadhaar seeding mandatory for government scholarships?",
+      "How to update bank account details in my scholarship profile?"
+    ],
+    "answer": "[Sample Information] Scholarship schemes generally require an active savings bank account in the student's own name with Aadhaar linking and NPCI/DBT mapping enabled. Please check your portal profile or consult the Scholarship Cell if you need to update banking information."
+  },
+  {
+    "id": 73,
+    "category": "Scholarships",
+    "question": "Does the institution provide support for applying to education loan interest subsidy schemes?",
+    "alternative_questions": [
+      "How to avail government interest subsidy on student education loans?",
+      "Where do I get verification for CSIS or state student credit card schemes?",
+      "Support for student credit card and loan subsidy applications"
+    ],
+    "answer": "[Sample Information] The Scholarship and Finance Desk assists students with institutional verification for government education loan schemes and interest subsidy programs. Please bring your loan sanction documents to the Student Administration Office."
+  },
+  {
+    "id": 74,
+    "category": "Campus Facilities",
+    "question": "What are the Central Library timings and book borrowing rules?",
+    "alternative_questions": [
+      "How many books can I issue from the university library?",
+      "When is the library open on weekdays and weekends?",
+      "How to access digital journals and e-books from the library?"
+    ],
+    "answer": "[Sample Information] The Central Library provides access to textbooks, reference collections, reading halls, and digital e-resources. Borrowing limits and operating hours vary between regular days and examination periods; please check the Library Notice Board or ask the Circulation Desk."
+  },
+  {
+    "id": 75,
+    "category": "Campus Facilities",
+    "question": "How can I apply for on-campus hostel accommodation?",
+    "alternative_questions": [
+      "What is the procedure for hostel room allotment?",
+      "Are separate hostels available for boys and girls?",
+      "How do I register for a hostel room after admission?"
+    ],
+    "answer": "[Sample Information] Students seeking on-campus residential accommodation can submit a Hostel Application through the Student Portal after confirming admission. Room allotment is managed by the Chief Warden's Office based on availability and institutional allocation norms."
+  },
+  {
+    "id": 76,
+    "category": "Campus Facilities",
+    "question": "How do I connect my laptop or phone to the campus Wi-Fi network?",
+    "alternative_questions": [
+      "Where do I get my campus Wi-Fi login credentials?",
+      "Who do I contact if the hostel or academic block Wi-Fi is not working?",
+      "Process to register MAC address for campus internet access"
+    ],
+    "answer": "[Sample Information] Enrolled students can obtain campus Wi-Fi credentials or register their device through the IT Services Portal or the Computer Center Helpdesk using their institutional ID card."
+  },
+  {
+    "id": 77,
+    "category": "Campus Facilities",
+    "question": "What medical and healthcare facilities are available on campus?",
+    "alternative_questions": [
+      "Is there a health center or doctor available on campus?",
+      "Who do I contact in case of a medical emergency in the hostel?",
+      "Does the campus have an ambulance and infirmary service?"
+    ],
+    "answer": "[Sample Information] The campus Health Center/Infirmary provides primary medical care and first-aid support during designated hours, along with emergency referral coordination. For residential emergencies, immediately inform the Hostel Warden or Campus Security Desk."
+  },
+  {
+    "id": 78,
+    "category": "Campus Facilities",
+    "question": "How can I register for the university bus or transportation service?",
+    "alternative_questions": [
+      "Where can I check the college bus routes and pickup timings?",
+      "How do I get a bus pass for daily commuting?",
+      "Who manages campus transport and shuttle services?"
+    ],
+    "answer": "[Sample Information] Route maps, pickup stops, and transport pass registration forms are available at the Transport Office or on the Student Portal. Day scholars must carry their valid Transport Pass while boarding university buses."
+  },
+  {
+    "id": 79,
+    "category": "Campus Facilities",
+    "question": "What sports, gymnasium, and recreational facilities are available for students?",
+    "alternative_questions": [
+      "How can I join the campus gym or sports clubs?",
+      "Are indoor and outdoor sports grounds open to all students?",
+      "Timings and registration for university sports complex"
+    ],
+    "answer": "[Sample Information] The Department of Physical Education & Sports oversees outdoor fields, indoor courts, and gymnasium facilities. Students can check slot timings and equipment borrowing rules with the Sports Officer."
+  },
+  {
+    "id": 80,
+    "category": "Campus Facilities",
+    "question": "What dining, mess, and cafeteria options are available on campus?",
+    "alternative_questions": [
+      "How does the hostel mess menu and dining system work?",
+      "Are there canteens or food courts for day scholars?",
+      "Who do I contact for feedback regarding mess food quality?"
+    ],
+    "answer": "[Sample Information] Residential hostels operate dedicated dining messes supervised by a student-faculty Mess Committee, while campus cafeterias serve meals and refreshments for all students and staff during academic hours."
+  },
+  {
+    "id": 81,
+    "category": "Campus Facilities",
+    "question": "How can I join technical clubs, cultural societies, or student chapters?",
+    "alternative_questions": [
+      "When do student club recruitments and auditions take place?",
+      "List of coding, robotics, cultural, and literary clubs on campus",
+      "How to participate in extracurricular activities and fests?"
+    ],
+    "answer": "[Sample Information] Student clubs, professional society chapters, and cultural teams conduct orientation and induction drives at the beginning of the academic year. Follow announcements from the Student Activity Center (SAC) or Dean of Student Welfare."
+  },
+  {
+    "id": 82,
+    "category": "Campus Facilities",
+    "question": "Is there a student counseling and mental wellness center on campus?",
+    "alternative_questions": [
+      "How can I book a confidential appointment with the campus counselor?",
+      "Mental health support and academic stress counseling for students",
+      "Where is the Student Wellness Center located?"
+    ],
+    "answer": "[Sample Information] The institution provides confidential counseling and wellness support to help students navigate academic stress and personal challenges. Students can schedule an appointment through the Student Wellness Cell or Dean of Student Welfare Office."
+  },
+  {
+    "id": 83,
+    "category": "Campus Facilities",
+    "question": "How do I get a new or replacement Student ID Card?",
+    "alternative_questions": [
+      "I lost my college ID card, how can I apply for a duplicate?",
+      "When are identity cards issued to first-year students?",
+      "Where do I report a damaged or lost student ID card?"
+    ],
+    "answer": "[Sample Information] First-year students receive their institutional ID cards through their department after admission verification. To replace a lost or damaged ID card, submit an application through the Student Services Desk."
+  },
+  {
+    "id": 84,
+    "category": "Campus Facilities",
+    "question": "Can students access computer laboratories and maker spaces after regular lecture hours?",
+    "alternative_questions": [
+      "How do I get permission to use research labs for project work?",
+      "Are computer center labs open in the evening?",
+      "Booking campus laboratories and seminar halls"
+    ],
+    "answer": "[Sample Information] Central computing facilities typically remain open during extended hours on working days. Access to specialized departmental or project laboratories outside scheduled class hours requires prior permission from the Lab In-Charge and Faculty Mentor."
+  },
+  {
+    "id": 85,
+    "category": "Campus Facilities",
+    "question": "How do I report a grievance, safety concern, or ragging incident on campus?",
+    "alternative_questions": [
+      "Is there an Anti-Ragging Cell and Grievance Redressal Committee?",
+      "Where can students file a confidential complaint regarding harassment or safety?",
+      "Campus security and anti-ragging helpline procedure"
+    ],
+    "answer": "[Sample Information] The institution maintains a strict zero-tolerance policy toward ragging and harassment. Students can report concerns confidentially to the Anti-Ragging Committee, Internal Complaints Committee (ICC), Proctor's Office, or via the online Grievance Redressal Portal."
+  },
+  {
+    "id": 86,
+    "category": "Campus Facilities",
+    "question": "Are banking, ATM, and stationery facilities available inside the campus?",
+    "alternative_questions": [
+      "Is there a photocopy and printing shop on campus?",
+      "Where is the campus ATM located?",
+      "On-campus bookstore and reprography services"
+    ],
+    "answer": "[Sample Information] Campus amenities generally include ATM services, a reprography/printing center, and a stationery store within the utility or student activity block. Check the Campus Map or ask the Information Desk for exact locations."
+  },
+  {
+    "id": 87,
+    "category": "Campus Facilities",
+    "question": "What are the rules for parking student vehicles on campus?",
+    "alternative_questions": [
+      "Can day scholars bring two-wheelers or cars inside the campus?",
+      "How do I get a student vehicle parking sticker?",
+      "Designated parking areas and traffic rules on campus"
+    ],
+    "answer": "[Sample Information] Students commuting by personal vehicle must park in designated student parking zones and follow campus safety regulations. Contact the Campus Security Office regarding vehicle pass requirements."
+  },
+  {
+    "id": 88,
+    "category": "Placements",
+    "question": "How do I register with the Training and Placement Cell for campus recruitment?",
+    "alternative_questions": [
+      "When does placement registration start for final-year students?",
+      "How to create a profile on the campus placement portal?",
+      "Steps to enroll in campus placement drives"
+    ],
+    "answer": "[Sample Information] Pre-final and final-year students can register on the official Training & Placement (T&P) Portal during the registration window announced by the Placement Office. Students must upload their verified resume and academic transcripts for approval."
+  },
+  {
+    "id": 89,
+    "category": "Placements",
+    "question": "What are the eligibility criteria to participate in campus placement drives?",
+    "alternative_questions": [
+      "Is there a minimum CGPA required to sit for campus placements?",
+      "Can students with active backlogs apply for placement companies?",
+      "Who sets the academic cutoff for recruitment drives?"
+    ],
+    "answer": "[Sample Information] While the Training & Placement Cell facilitates recruitment for all registered eligible students, individual recruiting organizations specify their own academic cutoffs, backlog policies, and branch requirements in each Job Announcement Form."
+  },
+  {
+    "id": 90,
+    "category": "Placements",
+    "question": "Does the Placement Cell assist students in finding summer or semester internships?",
+    "alternative_questions": [
+      "How can I apply for on-campus internship opportunities?",
+      "When do companies visit campus for third-year internship hiring?",
+      "Support from the T&P cell for industrial training and internships"
+    ],
+    "answer": "[Sample Information] Yes, the Training & Placement Cell coordinates on-campus internship drives and shares official internship openings through the placement portal. Students can also request an official Internship Recommendation/No-Objection Letter from the T&P Office."
+  },
+  {
+    "id": 91,
+    "category": "Placements",
+    "question": "How do I obtain a No-Objection Certificate (NOC) for an off-campus internship?",
+    "alternative_questions": [
+      "Where do I get an NOC signed to join a company internship?",
+      "Approvals required from the department and placement cell for internships",
+      "Process to apply for an internship NOC"
+    ],
+    "answer": "[Sample Information] To obtain an Internship NOC, submit the company's offer letter along with the prescribed application form endorsed by your Head of Department to the Training & Placement Office."
+  },
+  {
+    "id": 92,
+    "category": "Placements",
+    "question": "Does the institution organize pre-placement training, mock interviews, and resume workshops?",
+    "alternative_questions": [
+      "What career preparation and aptitude training is offered before placements?",
+      "Can I get my resume reviewed by the placement coordinator?",
+      "Soft skills, coding practice, and mock GD sessions for placements"
+    ],
+    "answer": "[Sample Information] The Training & Placement Cell regularly conducts career readiness programs, including aptitude workshops, technical coding bootcamps, resume-building sessions, group discussions, and mock interviews with industry mentors."
+  },
+  {
+    "id": 93,
+    "category": "Placements",
+    "question": "What is the institution's policy on multiple job offers during campus placements?",
+    "alternative_questions": [
+      "Can I sit for another company after getting selected in one placement drive?",
+      "How does the 'One Student One Offer' or dream-tier policy work?",
+      "Rules for upgrading a job offer in campus placements"
+    ],
+    "answer": "[Sample Information] Campus recruitment is governed by the Placement Policy regarding offer tiers and multiple offers to ensure fair opportunities across the batch. Please read the official Placement Guidelines document circulated by the Training & Placement Cell."
+  },
+  {
+    "id": 94,
+    "category": "Placements",
+    "question": "Where can I check upcoming company visits, job descriptions, and interview schedules?",
+    "alternative_questions": [
+      "How are students notified about new placement drives?",
+      "Where is the Job Announcement Form (JAF) published?",
+      "Schedule of pre-placement talks and online assessments"
+    ],
+    "answer": "[Sample Information] All Job Announcement Forms (JAF), eligibility details, application deadlines, and interview schedules are posted on the official Training & Placement Portal and communicated through departmental placement coordinators."
+  },
+  {
+    "id": 95,
+    "category": "Placements",
+    "question": "What are the stages of a typical campus recruitment selection process?",
+    "alternative_questions": [
+      "How are campus placement tests and interviews conducted?",
+      "What happens after the Pre-Placement Talk (PPT)?",
+      "Stages of campus hiring from aptitude test to HR interview"
+    ],
+    "answer": "[Sample Information] A standard recruitment drive includes a Pre-Placement Talk (PPT), an online aptitude or coding assessment, group discussion (if applicable), technical interview rounds, and an HR interview. Specific stages vary by recruiter."
+  },
+  {
+    "id": 96,
+    "category": "Placements",
+    "question": "Is there a dress code or code of conduct for attending placement drives?",
+    "alternative_questions": [
+      "What should I wear for pre-placement talks and campus interviews?",
+      "Attendance rules after registering for a company drive",
+      "What happens if I register for a placement drive and do not attend the test?"
+    ],
+    "answer": "[Sample Information] Students attending pre-placement talks, assessments, and interviews are required to wear formal attire and carry their University ID card and resume copies. Absenteeism after registering for a drive without prior permission may lead to disciplinary action under T&P norms."
+  },
+  {
+    "id": 97,
+    "category": "Placements",
+    "question": "What should I do if I plan to pursue higher studies instead of sitting for campus placements?",
+    "alternative_questions": [
+      "Do I need to submit a placement opt-out form if I am preparing for higher studies?",
+      "Does the college offer guidance for GATE, GRE, CAT, or higher education?",
+      "How to formally opt out of the campus recruitment process?"
+    ],
+    "answer": "[Sample Information] Students planning to pursue higher education, research, or entrepreneurship can submit a formal Placement Opt-Out declaration on the T&P Portal. Career guidance cells and departments also host mentorship sessions for competitive examinations."
+  },
+  {
+    "id": 98,
+    "category": "Placements",
+    "question": "How are Pre-Placement Offers (PPOs) from internships handled by the Placement Cell?",
+    "alternative_questions": [
+      "Do I need to inform the placement office if I receive a PPO from my internship?",
+      "Can I still participate in campus placements after receiving a Pre-Placement Offer?",
+      "Rules regarding internship conversion to full-time offer"
+    ],
+    "answer": "[Sample Information] Students who receive a Pre-Placement Offer (PPO) through an internship must officially notify the Training & Placement Cell. Eligibility for further on-campus drives after receiving a PPO is governed by the current year's Placement Policy."
+  },
+  {
+    "id": 99,
+    "category": "Placements",
+    "question": "Where can I view verified past placement statistics and recruiting partners?",
+    "alternative_questions": [
+      "Which companies visit the campus for placements?",
+      "Where is the official placement brochure published?",
+      "How can I see the list of past recruiters?"
+    ],
+    "answer": "[Sample Information] Because this chatbot uses a sample demonstration dataset, it does not report specific salary figures or placement percentages. You can view the official Placement Brochure and recruiter list on the university's Training & Placement webpage."
+  },
+  {
+    "id": 100,
+    "category": "Placements",
+    "question": "Who should I contact if I have an issue with my placement portal profile or offer letter?",
+    "alternative_questions": [
+      "How do I reach the student placement coordinator or T&P officer?",
+      "Where is the Training and Placement Office located?",
+      "Helpdesk for resolving placement registration or offer queries"
+    ],
+    "answer": "[Sample Information] For profile verification, academic data updates, or offer-related queries, please contact your departmental Student Placement Coordinator or visit the Training & Placement Office during working hours."
+  }
+]
