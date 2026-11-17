@@ -16,9 +16,11 @@ from database import (
     AdminAuthRepository,
     ConversationRepository,
     Database,
+    DocumentRepository,
     KnowledgeBaseRepository,
     UnansweredRepository,
 )
+from nlp.document_retriever import DocumentRetriever
 
 
 def _setup_isolated_env(db_path: Path):
@@ -28,6 +30,7 @@ def _setup_isolated_env(db_path: Path):
     kb_repo = KnowledgeBaseRepository(db)
     auth_repo = AdminAuthRepository(db)
     unans_repo = UnansweredRepository(db)
+    doc_repo = DocumentRepository(db)
 
     kb_repo.seed_from_json_if_empty()
     auth_repo.ensure_initial_admin(username="admin", password="TestAdmin!Password123")
@@ -36,7 +39,14 @@ def _setup_isolated_env(db_path: Path):
     backend_app.kb_repository = kb_repo
     backend_app.admin_auth_repository = auth_repo
     backend_app.unanswered_repository = unans_repo
+    backend_app.document_repository = doc_repo
+    backend_app.document_retriever = DocumentRetriever(
+        preprocessor=(
+            backend_app.chatbot.preprocessor if backend_app.chatbot else None
+        )
+    )
     backend_app.refresh_chatbot_index()
+    backend_app.refresh_document_index()
     return db, conv_mgr, kb_repo, auth_repo, unans_repo
 
 
@@ -50,6 +60,8 @@ def run_admin_tests() -> None:
         orig_kb = backend_app.kb_repository
         orig_auth = backend_app.admin_auth_repository
         orig_unans = backend_app.unanswered_repository
+        orig_doc_repo = backend_app.document_repository
+        orig_doc_retriever = backend_app.document_retriever
         try:
             test_db = Path(tmp_dir) / "test_admin.db"
             db, conv_mgr, kb_repo, auth_repo, unans_repo = _setup_isolated_env(test_db)
@@ -429,8 +441,11 @@ def run_admin_tests() -> None:
             backend_app.kb_repository = orig_kb
             backend_app.admin_auth_repository = orig_auth
             backend_app.unanswered_repository = orig_unans
+            backend_app.document_repository = orig_doc_repo
+            backend_app.document_retriever = orig_doc_retriever
             try:
                 backend_app.refresh_chatbot_index()
+                backend_app.refresh_document_index()
             except Exception:
                 pass
 

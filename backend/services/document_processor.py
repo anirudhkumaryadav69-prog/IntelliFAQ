@@ -15,6 +15,7 @@ import hashlib
 import os
 from pathlib import Path
 import re
+import tempfile
 import uuid
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -109,14 +110,13 @@ def _validate_magic_bytes(ext: str, content: bytes) -> None:
             raise DocumentValidationError("Binary content is not allowed in .txt files.")
 
 
-def validate_and_save_upload(
+def validate_upload_bytes(
     file_storage: Any,
-    upload_dir: Optional[Path] = None,
     max_bytes: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
-    Validate extension, MIME type, size, and magic bytes, compute SHA-256,
-    and save to a secure UUID-named file outside public frontend directories.
+    Validate extension, MIME type, size, and magic bytes, and compute SHA-256
+    without writing to disk.
     """
     if file_storage is None or not getattr(file_storage, "filename", ""):
         raise DocumentValidationError("No file was provided.")
@@ -144,34 +144,58 @@ def validate_and_save_upload(
     if not isinstance(content, (bytes, bytearray)) or len(content) == 0:
         raise DocumentValidationError("Uploaded file is empty.")
 
+    raw_bytes = bytes(content)
     limit = max_bytes if max_bytes is not None else get_max_upload_bytes()
-    if len(content) > limit:
+    if len(raw_bytes) > limit:
         raise DocumentValidationError(
             f"File exceeds maximum allowed size of {limit // (1024 * 1024)} MB."
         )
 
-    _validate_magic_bytes(ext, bytes(content))
+    _validate_magic_bytes(ext, raw_bytes)
 
-    sha256_hash = compute_sha256(bytes(content))
-    target_dir = resolve_upload_dir(upload_dir)
-    target_dir.mkdir(parents=True, exist_ok=True)
-
+    sha256_hash = compute_sha256(raw_bytes)
     storage_filename = f"{uuid.uuid4().hex}{ext}"
-    target_path = (target_dir / storage_filename).resolve()
-    # Ensure resolved path stays strictly inside target_dir
-    if target_dir.resolve() not in target_path.parents:
-        raise DocumentValidationError("Invalid storage path.")
-
-    target_path.write_bytes(content)
 
     return {
         "original_filename": safe_original_name,
         "storage_filename": storage_filename,
-        "storage_path": target_path,
         "extension": ext,
         "mime_type": base_mime,
-        "file_size": len(content),
+        "file_size": len(raw_bytes),
         "sha256_hash": sha256_hash,
+        "content": raw_bytes,
+    }
+
+
+def validate_and_save_upload(
+    file_storage: Any,
+    upload_dir: Optional[Path] = None,
+    max_bytes: Optional[int] = None,
+) -> Dict[str, Any]:
+    """
+    Validate extension, MIME type, size, and magic bytes, compute SHA-256,
+    and save to a secure UUID-named file outside public frontend directories.
+    """
+    validated = validate_upload_bytes(file_storage, max_bytes=max_bytes)
+
+    target_dir = resolve_upload_dir(upload_dir)
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    target_path = (target_dir / validated["storage_filename"]).resolve()
+    # Ensure resolved path stays strictly inside target_dir
+    if target_dir.resolve() not in target_path.parents:
+        raise DocumentValidationError("Invalid storage path.")
+
+    target_path.write_bytes(validated["content"])
+
+    return {
+        "original_filename": validated["original_filename"],
+        "storage_filename": validated["storage_filename"],
+        "storage_path": target_path,
+        "extension": validated["extension"],
+        "mime_type": validated["mime_type"],
+        "file_size": validated["file_size"],
+        "sha256_hash": validated["sha256_hash"],
     }
 
 
@@ -487,3 +511,14 @@ def extract_document_content(file_path: Path, extension: str) -> ExtractionResul
             chunks=[],
             error_message=f"Extraction failed: {type(exc).__name__}",
         )
+
+
+def extract_document_content_from_bytes(
+    data: bytes, extension: str
+) -> ExtractionResult:
+    """Extract and chunk text from raw document bytes using a temporary file."""
+    ext = extension.lower() if extension.startswith(".") else f".{extension.lower()}"
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir) / f"document{ext}"
+        tmp_path.write_bytes(data)
+        return extract_document_content(tmp_path, ext)

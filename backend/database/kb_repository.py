@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .conversation_repository import redact_sensitive_text
-from .db import Database
+from .db import Database, DatabaseError
 
 logger = logging.getLogger(__name__)
 
@@ -62,11 +62,31 @@ class AdminAuthRepository:
                 return None
 
             resolved_user = (
-                (username or os.environ.get("INTELLIFAQ_ADMIN_USERNAME", "admin"))
+                (
+                    username
+                    or os.environ.get("INTELLIFAQ_ADMIN_USERNAME")
+                    or os.environ.get("ADMIN_USERNAME")
+                    or ("admin" if self.db.backend != "postgresql" else "")
+                )
                 .strip()
-                or "admin"
             )
-            env_pass = password or os.environ.get("INTELLIFAQ_ADMIN_PASSWORD", "")
+            env_pass = (
+                password
+                or os.environ.get("INTELLIFAQ_ADMIN_PASSWORD")
+                or os.environ.get("ADMIN_PASSWORD")
+                or ""
+            )
+
+            if self.db.backend == "postgresql" and (not resolved_user or not env_pass):
+                raise DatabaseError(
+                    "Initial PostgreSQL admin bootstrap requires ADMIN_USERNAME and "
+                    "ADMIN_PASSWORD (or INTELLIFAQ_ADMIN_USERNAME and "
+                    "INTELLIFAQ_ADMIN_PASSWORD)."
+                )
+
+            if not resolved_user:
+                resolved_user = "admin"
+
             generated: Optional[str] = None
             if not env_pass:
                 generated = secrets.token_urlsafe(12)
@@ -105,7 +125,7 @@ class AdminAuthRepository:
                 """
                 SELECT admin_id, password_hash
                 FROM admin_users
-                WHERE username = ? COLLATE NOCASE
+                WHERE LOWER(username) = LOWER(?)
                 """,
                 (cleaned_user,),
             ).fetchone()
@@ -146,7 +166,7 @@ class AdminAuthRepository:
                 """
                 SELECT admin_id, username, password_hash
                 FROM admin_users
-                WHERE username = ? COLLATE NOCASE
+                WHERE LOWER(username) = LOWER(?)
                 """,
                 (cleaned_user,),
             ).fetchone()
@@ -278,18 +298,19 @@ class KnowledgeBaseRepository:
 
                 if cat_name.lower() not in cat_cache:
                     row = conn.execute(
-                        "SELECT category_id FROM faq_categories WHERE name = ? COLLATE NOCASE",
+                        "SELECT category_id FROM faq_categories WHERE LOWER(name) = LOWER(?)",
                         (cat_name,),
                     ).fetchone()
                     if row is None:
-                        cur = conn.execute(
+                        cat_cache[cat_name.lower()] = self.db.insert_returning_id(
+                            conn,
                             """
                             INSERT INTO faq_categories (name, created_at, updated_at)
                             VALUES (?, ?, ?)
                             """,
                             (cat_name, now_iso, now_iso),
+                            "category_id",
                         )
-                        cat_cache[cat_name.lower()] = int(cur.lastrowid)
                     else:
                         cat_cache[cat_name.lower()] = int(row["category_id"])
 
@@ -314,7 +335,11 @@ class KnowledgeBaseRepository:
                                 (int(faq_id), alt.strip(), now_iso, now_iso),
                             )
 
-        logger.info("Migrated %d FAQs from JSON into SQLite knowledge base.", len(records))
+            self.db.reset_sequence(conn, "faqs", "faq_id")
+            self.db.reset_sequence(conn, "faq_categories", "category_id")
+            self.db.reset_sequence(conn, "faq_alternatives", "alt_id")
+
+        logger.info("Seeded %d FAQs from JSON into %s knowledge base.", len(records), self.db.backend)
         return True
 
     def export_for_chatbot(self) -> List[Dict[str, Any]]:
@@ -440,20 +465,21 @@ class KnowledgeBaseRepository:
         now_iso = _utc_now_iso()
         with self.db.transaction() as conn:
             dup = conn.execute(
-                "SELECT 1 FROM faq_categories WHERE name = ? COLLATE NOCASE",
+                "SELECT 1 FROM faq_categories WHERE LOWER(name) = LOWER(?)",
                 (cleaned,),
             ).fetchone()
             if dup is not None:
                 raise ConflictError(f"Category '{cleaned}' already exists.")
 
-            cur = conn.execute(
+            cat_id = self.db.insert_returning_id(
+                conn,
                 """
                 INSERT INTO faq_categories (name, created_at, updated_at)
                 VALUES (?, ?, ?)
                 """,
                 (cleaned, now_iso, now_iso),
+                "category_id",
             )
-            cat_id = int(cur.lastrowid)
             self._log_activity(conn, "created", "category", cleaned)
         return {
             "category_id": cat_id,
@@ -482,7 +508,7 @@ class KnowledgeBaseRepository:
             dup = conn.execute(
                 """
                 SELECT 1 FROM faq_categories
-                WHERE name = ? COLLATE NOCASE AND category_id != ?
+                WHERE LOWER(name) = LOWER(?) AND category_id != ?
                 """,
                 (cleaned, int(category_id)),
             ).fetchone()
@@ -622,7 +648,7 @@ class KnowledgeBaseRepository:
                 JOIN faq_categories AS c ON c.category_id = f.category_id
                 LEFT JOIN faq_alternatives AS a ON a.faq_id = f.faq_id
                 {where_sql}
-                GROUP BY f.faq_id
+                GROUP BY f.faq_id, c.name
                 ORDER BY f.faq_id ASC
                 """,
                 tuple(params),
@@ -682,20 +708,21 @@ class KnowledgeBaseRepository:
                 raise ValueError("Selected FAQ category does not exist.")
 
             dup = conn.execute(
-                "SELECT faq_id FROM faqs WHERE question = ? COLLATE NOCASE",
+                "SELECT faq_id FROM faqs WHERE LOWER(question) = LOWER(?)",
                 (q_clean,),
             ).fetchone()
             if dup is not None:
                 raise ConflictError("An FAQ with this exact question already exists.")
 
-            cur = conn.execute(
+            new_id = self.db.insert_returning_id(
+                conn,
                 """
                 INSERT INTO faqs (category_id, question, answer, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?)
                 """,
                 (int(category_id), q_clean, a_clean, now_iso, now_iso),
+                "faq_id",
             )
-            new_id = int(cur.lastrowid)
 
             for alt_text in alts_clean:
                 conn.execute(
@@ -759,7 +786,7 @@ class KnowledgeBaseRepository:
             dup = conn.execute(
                 """
                 SELECT faq_id FROM faqs
-                WHERE question = ? COLLATE NOCASE AND faq_id != ?
+                WHERE LOWER(question) = LOWER(?) AND faq_id != ?
                 """,
                 (new_q, int(faq_id)),
             ).fetchone()
@@ -831,7 +858,7 @@ class UnansweredRepository:
                 """
                 SELECT item_id, occurrence_count
                 FROM unanswered_questions
-                WHERE query_text = ? COLLATE NOCASE
+                WHERE LOWER(query_text) = LOWER(?)
                   AND status = 'unreviewed'
                 LIMIT 1
                 """,
@@ -851,7 +878,8 @@ class UnansweredRepository:
                 )
                 return int(existing["item_id"])
 
-            cur = conn.execute(
+            return self.db.insert_returning_id(
+                conn,
                 """
                 INSERT INTO unanswered_questions (
                     query_text, conversation_id, match_type,
@@ -859,8 +887,8 @@ class UnansweredRepository:
                 ) VALUES (?, ?, ?, 1, 'unreviewed', NULL, ?, ?)
                 """,
                 (cleaned, conversation_id, match_type, now_iso, now_iso),
+                "item_id",
             )
-            return int(cur.lastrowid)
 
     def list_unanswered(
         self, search: str = "", status: str = ""

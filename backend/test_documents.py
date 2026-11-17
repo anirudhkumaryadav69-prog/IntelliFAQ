@@ -102,6 +102,8 @@ def run_document_tests() -> None:
         upload_dir = tmp_path / "uploads"
         prev_upload_env = os.environ.get("INTELLIFAQ_UPLOAD_DIR")
         prev_max_env = os.environ.get("INTELLIFAQ_MAX_UPLOAD_BYTES")
+        prev_supa_url = os.environ.get("SUPABASE_URL")
+        prev_supa_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
         orig_mgr = backend_app.conversation_manager
         orig_kb = backend_app.kb_repository
@@ -111,6 +113,8 @@ def run_document_tests() -> None:
 
         try:
             os.environ["INTELLIFAQ_UPLOAD_DIR"] = str(upload_dir)
+            os.environ.pop("SUPABASE_URL", None)
+            os.environ.pop("SUPABASE_SERVICE_ROLE_KEY", None)
             db = Database(tmp_path / "test_docs.db")
             db.initialize()
 
@@ -347,6 +351,14 @@ def run_document_tests() -> None:
                 os.environ.pop("INTELLIFAQ_MAX_UPLOAD_BYTES", None)
             else:
                 os.environ["INTELLIFAQ_MAX_UPLOAD_BYTES"] = prev_max_env
+            if prev_supa_url is None:
+                os.environ.pop("SUPABASE_URL", None)
+            else:
+                os.environ["SUPABASE_URL"] = prev_supa_url
+            if prev_supa_key is None:
+                os.environ.pop("SUPABASE_SERVICE_ROLE_KEY", None)
+            else:
+                os.environ["SUPABASE_SERVICE_ROLE_KEY"] = prev_supa_key
             backend_app.conversation_manager = orig_mgr
             backend_app.kb_repository = orig_kb
             backend_app.admin_auth_repository = orig_auth

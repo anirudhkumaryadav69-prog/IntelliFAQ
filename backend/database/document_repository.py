@@ -130,7 +130,8 @@ class DocumentRepository:
                     raise ValueError("Superseded document does not exist.")
                 version = int(prev_doc["version"]) + 1
 
-            cur = conn.execute(
+            doc_id = self.db.insert_returning_id(
+                conn,
                 """
                 INSERT INTO documents (
                     title, doc_type, academic_year, department, description,
@@ -164,8 +165,8 @@ class DocumentRepository:
                     now_iso,
                     now_iso,
                 ),
+                "document_id",
             )
-            doc_id = int(cur.lastrowid)
 
             if supersedes_document_id is not None:
                 conn.execute(
@@ -600,7 +601,10 @@ class DocumentRepository:
         return self.get_document(int(document_id))
 
     def delete_document(
-        self, document_id: int, upload_dir: Optional[Path] = None
+        self,
+        document_id: int,
+        upload_dir: Optional[Path] = None,
+        storage: Optional[Any] = None,
     ) -> bool:
         with self.db.transaction() as conn:
             row = conn.execute(
@@ -615,7 +619,12 @@ class DocumentRepository:
                 (int(document_id),),
             )
 
-        if upload_dir is not None and storage_name:
+        if storage is not None and storage_name:
+            try:
+                storage.delete(storage_name)
+            except Exception as exc:
+                logger.warning("Could not delete stored document object: %s", exc)
+        elif upload_dir is not None and storage_name:
             candidate = (upload_dir / storage_name).resolve()
             try:
                 if upload_dir.resolve() in candidate.parents and candidate.exists():
@@ -690,7 +699,7 @@ class DocumentRepository:
                 JOIN documents AS d ON d.document_id = c.document_id
                 WHERE d.processing_status = 'processed'
                   AND d.approval_status = 'approved'
-                  AND (d.expiry_date IS NULL OR d.expiry_date = '' OR d.expiry_date >= ?)
+                  AND (d.expiry_date IS NULL OR d.expiry_date >= ?)
                 ORDER BY c.document_id ASC, c.chunk_index ASC
                 """,
                 (today,),

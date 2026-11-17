@@ -29,8 +29,9 @@ import tempfile
 from typing import Any, Dict
 
 import app as backend_app
-from database import Database
+from database import Database, DocumentRepository
 from nlp.chatbot import MATCH_AMBIGUOUS, MATCH_CLEAR, MATCH_NONE
+from nlp.document_retriever import DocumentRetriever
 
 EXPECTED_CHAT_RESPONSE_KEYS = {
     "success",
@@ -90,15 +91,31 @@ def run_api_tests() -> None:
     """Execute all 17 API verification scenarios and assert expected outcomes."""
     temp_dir = tempfile.TemporaryDirectory()
     original_manager = backend_app.conversation_manager
+    original_doc_repo = backend_app.document_repository
+    original_doc_retriever = backend_app.document_retriever
     try:
         test_db_path = Path(temp_dir.name) / "test_api_conversations.db"
+        test_db = Database(test_db_path)
         backend_app.conversation_manager = backend_app.ConversationManager(
-            database=Database(test_db_path)
+            database=test_db
         )
         backend_app.conversation_manager.initialize()
+        backend_app.document_repository = DocumentRepository(test_db)
+        backend_app.document_retriever = DocumentRetriever(
+            preprocessor=(
+                backend_app.chatbot.preprocessor if backend_app.chatbot else None
+            )
+        )
+        backend_app.refresh_document_index()
         _run_api_scenarios(temp_dir.name)
     finally:
         backend_app.conversation_manager = original_manager
+        backend_app.document_repository = original_doc_repo
+        backend_app.document_retriever = original_doc_retriever
+        try:
+            backend_app.refresh_document_index()
+        except Exception:
+            pass
         temp_dir.cleanup()
 
 

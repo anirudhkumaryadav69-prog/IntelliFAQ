@@ -19,6 +19,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 from flask import Flask, Response, g, jsonify, request
 from flask_cors import CORS
 from werkzeug.exceptions import BadRequest, HTTPException
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from database import (
     MAX_TITLE_LENGTH,
@@ -42,9 +43,13 @@ from nlp.clarification_flows import (
 from nlp.document_retriever import DocumentRetriever, build_grounded_response
 from services import (
     DocumentValidationError,
+    StorageError,
     extract_document_content,
+    extract_document_content_from_bytes,
+    get_document_storage,
     resolve_upload_dir,
     validate_and_save_upload,
+    validate_upload_bytes,
 )
 
 # Configure application logging
@@ -59,6 +64,14 @@ ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+_extra_origins = [
+    origin.strip()
+    for origin in os.environ.get("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
+for _origin in _extra_origins:
+    if _origin not in ALLOWED_ORIGINS:
+        ALLOWED_ORIGINS.append(_origin)
 
 # Configurable limits for SQLite-backed conversation management
 DEFAULT_MAX_CONVERSATIONS = 200
@@ -322,6 +335,8 @@ class ConversationManager:
 
 # Initialize Flask app
 app = Flask(__name__)
+# Trust a single reverse proxy hop (Render) for X-Forwarded-For and X-Forwarded-Proto only
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=0, x_port=0, x_prefix=0)
 
 # Configure CORS strictly for the React/Vite frontend origins
 CORS(
@@ -408,6 +423,17 @@ def refresh_document_index() -> Tuple[bool, Optional[str]]:
 
 # Admin session cookie & brute-force rate-limiting helpers
 ADMIN_SESSION_COOKIE = "intellifaq_admin_session"
+
+
+def _admin_cookie_settings() -> Dict[str, Any]:
+    """Return consistent cookie attributes for local HTTP and cross-origin HTTPS."""
+    is_secure = request.is_secure or os.environ.get("INTELLIFAQ_COOKIE_SECURE") == "1"
+    return {
+        "httponly": True,
+        "samesite": "None" if is_secure else "Lax",
+        "secure": is_secure,
+        "path": "/",
+    }
 _LOGIN_WINDOW_SECONDS = 300.0
 _MAX_FAILED_LOGINS = 5
 _login_attempts_lock = threading.Lock()
@@ -849,16 +875,29 @@ def _build_chat_error_response(
 def health_check() -> Tuple[Response, int]:
     """
     GET /api/health
-    Returns service status, chatbot readiness, and actual loaded FAQ count.
+    Returns application status, database connection/backend status, loaded FAQ
+    count, and read-only document storage configuration status.
     """
-    if _is_chatbot_ready() and chatbot is not None:
+    db_connected = conversation_manager.database.health_check()
+    db_backend = conversation_manager.database.backend
+    storage_status = get_document_storage().status()
+    chatbot_ok = _is_chatbot_ready() and chatbot is not None
+    faq_count = len(chatbot.faqs) if chatbot is not None else 0
+
+    if chatbot_ok and db_connected:
         return (
             jsonify(
                 {
                     "success": True,
+                    "status": "ok",
                     "message": "IntelliFAQ backend service is running and healthy.",
                     "chatbot_status": "ready",
-                    "faq_count": len(chatbot.faqs),
+                    "faq_count": faq_count,
+                    "database": {
+                        "connected": True,
+                        "backend": db_backend,
+                    },
+                    "storage": storage_status,
                 }
             ),
             200,
@@ -868,10 +907,20 @@ def health_check() -> Tuple[Response, int]:
         jsonify(
             {
                 "success": False,
+                "status": "degraded",
                 "message": chatbot_init_error
-                or "NLP chatbot engine is not ready.",
-                "chatbot_status": "unavailable",
-                "faq_count": len(chatbot.faqs) if chatbot is not None else 0,
+                or (
+                    "Database connection is unavailable."
+                    if not db_connected
+                    else "NLP chatbot engine is not ready."
+                ),
+                "chatbot_status": "ready" if chatbot_ok else "unavailable",
+                "faq_count": faq_count,
+                "database": {
+                    "connected": db_connected,
+                    "backend": db_backend,
+                },
+                "storage": storage_status,
             }
         ),
         503,
@@ -1403,15 +1452,12 @@ def admin_login() -> Tuple[Response, int]:
             "expires_at": session["expires_at"],
         }
     )
-    is_secure = request.is_secure or os.environ.get("INTELLIFAQ_COOKIE_SECURE") == "1"
+    cookie_opts = _admin_cookie_settings()
     resp.set_cookie(
         ADMIN_SESSION_COOKIE,
         session["session_id"],
-        httponly=True,
-        samesite="Lax",
-        secure=is_secure,
         max_age=12 * 3600,
-        path="/",
+        **cookie_opts,
     )
     return resp, 200
 
@@ -1422,7 +1468,14 @@ def admin_logout() -> Tuple[Response, int]:
     """Invalidate the current administrator session and clear its cookie."""
     admin_auth_repository.delete_session(g.admin_session["session_id"])
     resp = jsonify({"success": True, "message": "Logged out successfully."})
-    resp.delete_cookie(ADMIN_SESSION_COOKIE, path="/")
+    cookie_opts = _admin_cookie_settings()
+    resp.delete_cookie(
+        ADMIN_SESSION_COOKIE,
+        path=cookie_opts["path"],
+        samesite=cookie_opts["samesite"],
+        secure=cookie_opts["secure"],
+        httponly=cookie_opts["httponly"],
+    )
     return resp, 200
 
 
@@ -1844,13 +1897,14 @@ def admin_upload_document() -> Tuple[Response, int]:
             400,
         )
 
-    upload_dir = resolve_upload_dir()
-    saved: Optional[Dict[str, Any]] = None
+    storage = get_document_storage()
+    validated: Optional[Dict[str, Any]] = None
+    stored_filename: Optional[str] = None
+    saved_to_storage = False
     try:
-        saved = validate_and_save_upload(uploaded_file, upload_dir=upload_dir)
-        existing_dup = document_repository.find_by_sha256(saved["sha256_hash"])
+        validated = validate_upload_bytes(uploaded_file)
+        existing_dup = document_repository.find_by_sha256(validated["sha256_hash"])
         if existing_dup is not None:
-            saved["storage_path"].unlink(missing_ok=True)
             return (
                 jsonify(
                     {
@@ -1861,7 +1915,16 @@ def admin_upload_document() -> Tuple[Response, int]:
                 409,
             )
 
-        extraction = extract_document_content(saved["storage_path"], saved["extension"])
+        extraction = extract_document_content_from_bytes(
+            validated["content"], validated["extension"]
+        )
+        stored_filename = validated["storage_filename"]
+        storage.save(
+            stored_filename,
+            validated["content"],
+            validated["mime_type"],
+        )
+        saved_to_storage = True
         created = document_repository.create_document_with_extraction(
             title=title,
             doc_type=doc_type,
@@ -1870,25 +1933,32 @@ def admin_upload_document() -> Tuple[Response, int]:
             description=description,
             effective_date=effective_date,
             expiry_date=expiry_date,
-            original_filename=saved["original_filename"],
-            storage_filename=saved["storage_filename"],
-            mime_type=saved["mime_type"],
-            file_size=saved["file_size"],
-            sha256_hash=saved["sha256_hash"],
+            original_filename=validated["original_filename"],
+            storage_filename=stored_filename,
+            mime_type=validated["mime_type"],
+            file_size=validated["file_size"],
+            sha256_hash=validated["sha256_hash"],
             uploaded_by=g.admin_session["username"],
             extraction=extraction,
             supersedes_document_id=supersedes_id,
         )
     except DocumentValidationError as exc:
         return jsonify({"success": False, "error": str(exc)}), 400
+    except StorageError as exc:
+        return jsonify({"success": False, "error": str(exc)}), 500
     except ConflictError as exc:
-        if saved and saved.get("storage_path"):
-            saved["storage_path"].unlink(missing_ok=True)
+        if saved_to_storage and stored_filename:
+            storage.delete(stored_filename)
         return jsonify({"success": False, "error": str(exc)}), 409
     except ValueError as exc:
-        if saved and saved.get("storage_path"):
-            saved["storage_path"].unlink(missing_ok=True)
+        if saved_to_storage and stored_filename:
+            storage.delete(stored_filename)
         return jsonify({"success": False, "error": str(exc)}), 400
+    except Exception as exc:
+        if saved_to_storage and stored_filename:
+            storage.delete(stored_filename)
+        logger.error("Unexpected error persisting uploaded document: %s", type(exc).__name__)
+        return jsonify({"success": False, "error": "Failed to persist uploaded document."}), 500
 
     # If replacing an approved document, refresh index so superseded doc is excluded
     if supersedes_id is not None:
@@ -1947,7 +2017,7 @@ def admin_update_document(document_id: int) -> Tuple[Response, int]:
 def admin_delete_document(document_id: int) -> Tuple[Response, int]:
     """Delete a document, its chunks/logs, and stored file, then refresh index."""
     deleted = document_repository.delete_document(
-        document_id, upload_dir=resolve_upload_dir()
+        document_id, storage=get_document_storage()
     )
     if not deleted:
         return jsonify({"success": False, "error": "Document not found."}), 404
@@ -2023,16 +2093,16 @@ def admin_reprocess_document(document_id: int) -> Tuple[Response, int]:
     if info is None:
         return jsonify({"success": False, "error": "Document not found."}), 404
 
-    upload_dir = resolve_upload_dir()
-    file_path = (upload_dir / info["storage_filename"]).resolve()
-    if not file_path.exists():
+    storage = get_document_storage()
+    raw_bytes = storage.read_bytes(info["storage_filename"])
+    if raw_bytes is None:
         return (
             jsonify({"success": False, "error": "Stored document file is missing."}),
             404,
         )
 
     ext = Path(info["original_filename"]).suffix.lower()
-    extraction = extract_document_content(file_path, ext)
+    extraction = extract_document_content_from_bytes(raw_bytes, ext)
     doc = document_repository.reprocess_document(
         document_id, extraction, actor=g.admin_session["username"]
     )

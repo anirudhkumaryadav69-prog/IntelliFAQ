@@ -1,5 +1,6 @@
 # Python & Backend Virtual Environment
 backend/venv/
+backend/nltk_data/
 venv/
 .venv/
 env/

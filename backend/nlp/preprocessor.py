@@ -10,6 +10,7 @@ Provides reusable, lightweight NLP preprocessing tailored for FAQ retrieval:
 - WordNet lemmatization (nouns and verbs)
 """
 
+from pathlib import Path
 import re
 from typing import List, Set
 
@@ -17,6 +18,13 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+
+# Prefer project-local NLTK data directory (e.g., populated during Render build)
+_LOCAL_NLTK_DATA_DIR = Path(__file__).resolve().parent.parent / "nltk_data"
+if _LOCAL_NLTK_DATA_DIR.is_dir():
+    _local_nltk_str = str(_LOCAL_NLTK_DATA_DIR)
+    if _local_nltk_str not in nltk.data.path:
+        nltk.data.path.insert(0, _local_nltk_str)
 
 # Common contractions mapped to expanded forms prior to punctuation stripping
 CONTRACTIONS_MAP = {

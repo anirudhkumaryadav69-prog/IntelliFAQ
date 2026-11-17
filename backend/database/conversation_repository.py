@@ -276,6 +276,8 @@ def _sanitize_sub_responses(sub_responses: Any) -> List[Dict[str, Any]]:
 
 
 def _loads_json_list(raw: Any) -> List[Any]:
+    if isinstance(raw, list):
+        return raw
     if not isinstance(raw, str) or not raw:
         return []
     try:
@@ -287,6 +289,8 @@ def _loads_json_list(raw: Any) -> List[Any]:
 
 
 def _loads_json_dict(raw: Any) -> Dict[str, Any]:
+    if isinstance(raw, dict):
+        return raw
     if not isinstance(raw, str) or not raw:
         return {}
     try:
@@ -371,7 +375,7 @@ class ConversationRepository:
                 rows = conn.execute(
                     """
                     SELECT conversation_id FROM conversations
-                    ORDER BY is_active ASC, last_activity_seq ASC, rowid ASC
+                    ORDER BY is_active ASC, last_activity_seq ASC, created_at ASC, conversation_id ASC
                     LIMIT ?
                     """,
                     (overflow,),
@@ -392,7 +396,7 @@ class ConversationRepository:
                     last_resolved_faq_id, last_resolved_question, last_resolved_category,
                     pending_candidates, clarification_state, title, is_title_custom,
                     is_active, last_activity_seq
-                ) VALUES (?, ?, ?, NULL, NULL, NULL, '[]', '{}', ?, 0, 1, ?)
+                ) VALUES (?, ?, ?, NULL, NULL, NULL, '[]', '{}', ?, FALSE, TRUE, ?)
                 """,
                 (conv_id, now_iso, now_iso, DEFAULT_CONVERSATION_TITLE, next_seq),
             )
@@ -439,7 +443,7 @@ class ConversationRepository:
                        last_resolved_category, pending_candidates,
                        clarification_state, is_active
                 FROM conversations
-                WHERE conversation_id = ? AND is_active = 1
+                WHERE conversation_id = ? AND is_active = TRUE
                 """,
                 (conv_id,),
             ).fetchone()
@@ -522,21 +526,22 @@ class ConversationRepository:
                        last_resolved_category, pending_candidates,
                        title, is_title_custom
                 FROM conversations
-                WHERE conversation_id = ? AND is_active = 1
+                WHERE conversation_id = ? AND is_active = TRUE
                 """,
                 (conv_id,),
             ).fetchone()
             if row is None:
                 return False
 
-            user_cursor = conn.execute(
+            user_message_id = self.db.insert_returning_id(
+                conn,
                 """
                 INSERT INTO messages (conversation_id, role, message_text, created_at)
                 VALUES (?, 'user', ?, ?)
                 """,
                 (conv_id, redact_sensitive_text(original_user_message), now_iso),
+                "message_id",
             )
-            user_message_id = user_cursor.lastrowid
 
             conn.execute(
                 """
@@ -555,10 +560,10 @@ class ConversationRepository:
                     nlp_response.get("category"),
                     _as_int_or_none(nlp_response.get("faq_id")),
                     _as_float(nlp_response.get("confidence")),
-                    1 if nlp_response.get("is_multi_intent") else 0,
+                    bool(nlp_response.get("is_multi_intent")),
                     nlp_response.get("matched_question"),
-                    1 if nlp_response.get("fallback") else 0,
-                    1 if nlp_response.get("needs_clarification") else 0,
+                    bool(nlp_response.get("fallback")),
+                    bool(nlp_response.get("needs_clarification")),
                     nlp_response.get("clarification_message"),
                     json.dumps(_sanitize_candidates(nlp_response.get("candidates"))),
                     json.dumps(_sanitize_sub_responses(nlp_response.get("sub_responses"))),
@@ -648,7 +653,7 @@ class ConversationRepository:
 
         with self.db.transaction() as conn:
             row = conn.execute(
-                "SELECT 1 FROM conversations WHERE conversation_id = ? AND is_active = 1",
+                "SELECT 1 FROM conversations WHERE conversation_id = ? AND is_active = TRUE",
                 (conv_id,),
             ).fetchone()
             if row is None:
@@ -658,7 +663,7 @@ class ConversationRepository:
             conn.execute(
                 """
                 UPDATE conversations
-                SET is_active = 0,
+                SET is_active = FALSE,
                     updated_at = ?,
                     last_resolved_faq_id = NULL,
                     last_resolved_question = NULL,
@@ -707,7 +712,7 @@ class ConversationRepository:
                 FROM conversations AS c
                 LEFT JOIN messages AS m
                     ON m.conversation_id = c.conversation_id
-                WHERE c.is_active = 1
+                WHERE c.is_active = TRUE
                 GROUP BY c.conversation_id
                 ORDER BY c.updated_at DESC, c.last_activity_seq DESC
                 LIMIT ?
@@ -745,7 +750,7 @@ class ConversationRepository:
                 FROM conversations AS c
                 LEFT JOIN messages AS m_all
                     ON m_all.conversation_id = c.conversation_id
-                WHERE c.is_active = 1
+                WHERE c.is_active = TRUE
                   AND (
                       LOWER(c.title) LIKE LOWER(?) ESCAPE '\\'
                       OR EXISTS (
@@ -782,7 +787,7 @@ class ConversationRepository:
                        last_resolved_category, pending_candidates,
                        clarification_state, is_active
                 FROM conversations
-                WHERE conversation_id = ? AND is_active = 1
+                WHERE conversation_id = ? AND is_active = TRUE
                 """,
                 (conv_id,),
             ).fetchone()
@@ -829,9 +834,9 @@ class ConversationRepository:
                 """
                 UPDATE conversations
                 SET title = ?,
-                    is_title_custom = 1,
+                    is_title_custom = TRUE,
                     updated_at = ?
-                WHERE conversation_id = ? AND is_active = 1
+                WHERE conversation_id = ? AND is_active = TRUE
                 """,
                 (cleaned, now_iso, conv_id),
             )
@@ -867,7 +872,7 @@ class ConversationRepository:
 
         with self.db.transaction() as conn:
             row = conn.execute(
-                "SELECT 1 FROM conversations WHERE conversation_id = ? AND is_active = 1",
+                "SELECT 1 FROM conversations WHERE conversation_id = ? AND is_active = TRUE",
                 (conv_id,),
             ).fetchone()
             if row is None:
@@ -885,7 +890,7 @@ class ConversationRepository:
     def count_conversations(self, active_only: bool = True) -> int:
         query = "SELECT COUNT(*) FROM conversations"
         if active_only:
-            query += " WHERE is_active = 1"
+            query += " WHERE is_active = TRUE"
         with self.db.connection() as conn:
             return int(conn.execute(query).fetchone()[0])
 
