@@ -39,21 +39,6 @@ class ConflictError(ValueError):
     """Raised when an operation conflicts with existing data (e.g. non-empty category delete)."""
 
 
-class AdminNotFoundError(LookupError):
-    """Raised when the target administrator account does not exist."""
-
-
-class RecoveryAlreadyUsedError(RuntimeError):
-    """Raised when the one-time primary administrator recovery has already completed."""
-
-
-PRIMARY_ADMIN_ID = 1
-RECOVERY_ADVISORY_LOCK_KEY = 918273645
-RECOVERY_MARKER_ACTION = "admin_recovery_completed"
-RECOVERY_MARKER_ENTITY_TYPE = "admin_users"
-RECOVERY_MARKER_ENTITY_LABEL = "admin_id:1"
-
-
 class AdminAuthRepository:
     """SQLite-backed administrator authentication and HttpOnly session store."""
 
@@ -247,99 +232,6 @@ class AdminAuthRepository:
                 "DELETE FROM admin_sessions WHERE session_id = ?",
                 (session_id.strip(),),
             )
-
-    def recover_primary_admin(self, username: str, password: str) -> Dict[str, Any]:
-        """
-        One-time, PostgreSQL-only recovery for administrator ID 1.
-
-        Acquires a transaction-scoped PostgreSQL advisory lock before checking
-        the persistent completion marker in `admin_activity_log`, updates
-        `admin_id = 1` in place, clears its sessions, and records the
-        completion marker atomically.
-        """
-        if self.db.backend != "postgresql":
-            raise DatabaseError(
-                "Primary administrator recovery is only permitted on PostgreSQL."
-            )
-
-        cleaned_user = username.strip() if isinstance(username, str) else ""
-        if not cleaned_user or len(cleaned_user) > 120:
-            raise ValueError("Username must be between 1 and 120 characters.")
-        if not isinstance(password, str) or len(password) < 16:
-            raise ValueError("Password must be at least 16 characters.")
-
-        now_iso = _utc_now_iso()
-        pw_hash = generate_password_hash(password)
-
-        with self.db.transaction() as conn:
-            conn.execute(f"SELECT pg_advisory_xact_lock({RECOVERY_ADVISORY_LOCK_KEY})")
-
-            marker = conn.execute(
-                """
-                SELECT 1
-                FROM admin_activity_log
-                WHERE action = ? AND entity_type = ?
-                LIMIT 1
-                """,
-                (RECOVERY_MARKER_ACTION, RECOVERY_MARKER_ENTITY_TYPE),
-            ).fetchone()
-            if marker is not None:
-                raise RecoveryAlreadyUsedError(
-                    "Primary administrator recovery has already been completed."
-                )
-
-            target = conn.execute(
-                "SELECT admin_id FROM admin_users WHERE admin_id = ?",
-                (PRIMARY_ADMIN_ID,),
-            ).fetchone()
-            if target is None:
-                raise AdminNotFoundError("Primary administrator account not found.")
-
-            conflict = conn.execute(
-                """
-                SELECT admin_id
-                FROM admin_users
-                WHERE LOWER(username) = LOWER(?) AND admin_id != ?
-                """,
-                (cleaned_user, PRIMARY_ADMIN_ID),
-            ).fetchone()
-            if conflict is not None:
-                raise ConflictError(
-                    "Username is already in use by another administrator."
-                )
-
-            cur = conn.execute(
-                """
-                UPDATE admin_users
-                SET username = ?, password_hash = ?, updated_at = ?
-                WHERE admin_id = ?
-                """,
-                (cleaned_user, pw_hash, now_iso, PRIMARY_ADMIN_ID),
-            )
-            if cur.rowcount != 1:
-                raise DatabaseError(
-                    "Unexpected row count during primary administrator recovery."
-                )
-
-            conn.execute(
-                "DELETE FROM admin_sessions WHERE admin_id = ?",
-                (PRIMARY_ADMIN_ID,),
-            )
-
-            conn.execute(
-                """
-                INSERT INTO admin_activity_log (action, entity_type, entity_label, created_at)
-                VALUES (?, ?, ?, ?)
-                """,
-                (
-                    RECOVERY_MARKER_ACTION,
-                    RECOVERY_MARKER_ENTITY_TYPE,
-                    RECOVERY_MARKER_ENTITY_LABEL,
-                    now_iso,
-                ),
-            )
-
-        return {"admin_id": PRIMARY_ADMIN_ID, "username": cleaned_user}
 
 
 class KnowledgeBaseRepository:
@@ -1087,11 +979,9 @@ class UnansweredRepository:
 
 __all__ = [
     "AdminAuthRepository",
-    "AdminNotFoundError",
     "ConflictError",
     "DEFAULT_FAQ_JSON_PATH",
     "KnowledgeBaseRepository",
-    "RecoveryAlreadyUsedError",
     "UnansweredRepository",
     "VALID_UNANSWERED_STATUSES",
 ]

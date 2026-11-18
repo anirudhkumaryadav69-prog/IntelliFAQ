@@ -33,7 +33,6 @@ from database import (
     UnansweredRepository,
     normalize_conversation_id,
 )
-from database.kb_repository import AdminNotFoundError, RecoveryAlreadyUsedError
 from nlp import FAQChatbot
 from nlp.chatbot import MATCH_AMBIGUOUS, MATCH_CLEAR, MATCH_NONE
 from nlp.clarification_flows import (
@@ -440,98 +439,28 @@ _MAX_FAILED_LOGINS = 5
 _login_attempts_lock = threading.Lock()
 _failed_login_attempts: Dict[str, List[float]] = {}
 
-_RECOVERY_TOKEN_ENV_VAR = "INTELLIFAQ_ADMIN_RECOVERY_TOKEN"
-_MIN_RECOVERY_TOKEN_LENGTH = 32
-_RECOVERY_WINDOW_SECONDS = 300.0
-_MAX_FAILED_RECOVERIES = 5
-_recovery_attempts_lock = threading.Lock()
-_failed_recovery_attempts: Dict[str, List[float]] = {}
-
-
-def _check_windowed_rate_limit(
-    attempts: Dict[str, List[float]],
-    lock: threading.Lock,
-    client_ip: str,
-    window_seconds: float,
-    max_attempts: int,
-) -> bool:
-    now = time.monotonic()
-    cutoff = now - window_seconds
-    with lock:
-        recent = [t for t in attempts.get(client_ip, []) if t >= cutoff]
-        attempts[client_ip] = recent
-        return len(recent) >= max_attempts
-
-
-def _record_windowed_attempt(
-    attempts: Dict[str, List[float]],
-    lock: threading.Lock,
-    client_ip: str,
-    window_seconds: float,
-) -> None:
-    now = time.monotonic()
-    cutoff = now - window_seconds
-    with lock:
-        recent = [t for t in attempts.get(client_ip, []) if t >= cutoff]
-        recent.append(now)
-        attempts[client_ip] = recent
-
-
-def _clear_windowed_attempts(
-    attempts: Dict[str, List[float]],
-    lock: threading.Lock,
-    client_ip: str,
-) -> None:
-    with lock:
-        attempts.pop(client_ip, None)
-
 
 def _is_rate_limited(client_ip: str) -> bool:
-    return _check_windowed_rate_limit(
-        _failed_login_attempts,
-        _login_attempts_lock,
-        client_ip,
-        _LOGIN_WINDOW_SECONDS,
-        _MAX_FAILED_LOGINS,
-    )
+    now = time.monotonic()
+    cutoff = now - _LOGIN_WINDOW_SECONDS
+    with _login_attempts_lock:
+        recent = [t for t in _failed_login_attempts.get(client_ip, []) if t >= cutoff]
+        _failed_login_attempts[client_ip] = recent
+        return len(recent) >= _MAX_FAILED_LOGINS
 
 
 def _record_failed_login(client_ip: str) -> None:
-    _record_windowed_attempt(
-        _failed_login_attempts,
-        _login_attempts_lock,
-        client_ip,
-        _LOGIN_WINDOW_SECONDS,
-    )
+    now = time.monotonic()
+    cutoff = now - _LOGIN_WINDOW_SECONDS
+    with _login_attempts_lock:
+        recent = [t for t in _failed_login_attempts.get(client_ip, []) if t >= cutoff]
+        recent.append(now)
+        _failed_login_attempts[client_ip] = recent
 
 
 def _clear_failed_logins(client_ip: str) -> None:
-    _clear_windowed_attempts(_failed_login_attempts, _login_attempts_lock, client_ip)
-
-
-def _is_recovery_rate_limited(client_ip: str) -> bool:
-    return _check_windowed_rate_limit(
-        _failed_recovery_attempts,
-        _recovery_attempts_lock,
-        client_ip,
-        _RECOVERY_WINDOW_SECONDS,
-        _MAX_FAILED_RECOVERIES,
-    )
-
-
-def _record_failed_recovery(client_ip: str) -> None:
-    _record_windowed_attempt(
-        _failed_recovery_attempts,
-        _recovery_attempts_lock,
-        client_ip,
-        _RECOVERY_WINDOW_SECONDS,
-    )
-
-
-def _clear_failed_recovery(client_ip: str) -> None:
-    _clear_windowed_attempts(
-        _failed_recovery_attempts, _recovery_attempts_lock, client_ip
-    )
+    with _login_attempts_lock:
+        _failed_login_attempts.pop(client_ip, None)
 
 
 def require_admin_auth(fn):
@@ -1548,138 +1477,6 @@ def admin_logout() -> Tuple[Response, int]:
         httponly=cookie_opts["httponly"],
     )
     return resp, 200
-
-
-@app.route("/api/admin/recovery", methods=["POST"])
-def admin_recovery() -> Tuple[Response, int]:
-    """
-    Temporary, one-time PostgreSQL recovery endpoint for administrator ID 1.
-    Disabled (HTTP 404) unless INTELLIFAQ_ADMIN_RECOVERY_TOKEN (>= 32 chars) is set.
-    """
-    expected_token = os.environ.get(_RECOVERY_TOKEN_ENV_VAR, "").strip()
-    if len(expected_token) < _MIN_RECOVERY_TOKEN_LENGTH:
-        return jsonify({"success": False, "error": "Not found."}), 404
-
-    if not request.is_secure:
-        return (
-            jsonify(
-                {"success": False, "error": "HTTPS is required for admin recovery."}
-            ),
-            403,
-        )
-
-    client_ip = request.remote_addr or "unknown"
-    if _is_recovery_rate_limited(client_ip):
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Too many failed recovery attempts. Please try again later.",
-                }
-            ),
-            429,
-        )
-
-    supplied_token = request.headers.get("X-Admin-Recovery-Token", "")
-    if (
-        not isinstance(supplied_token, str)
-        or not supplied_token
-        or not secrets.compare_digest(supplied_token, expected_token)
-    ):
-        _record_failed_recovery(client_ip)
-        return (
-            jsonify({"success": False, "error": "Invalid recovery token."}),
-            401,
-        )
-
-    _clear_failed_recovery(client_ip)
-
-    if admin_auth_repository.db.backend != "postgresql":
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Admin recovery is only supported on PostgreSQL.",
-                }
-            ),
-            403,
-        )
-
-    payload = request.get_json(silent=True)
-    if not isinstance(payload, dict):
-        return (
-            jsonify({"success": False, "error": "Invalid JSON request body."}),
-            400,
-        )
-
-    username = payload.get("username")
-    password = payload.get("password")
-    if not isinstance(username, str) or not isinstance(password, str):
-        return (
-            jsonify(
-                {"success": False, "error": "Username and password are required."}
-            ),
-            400,
-        )
-
-    try:
-        recovered = admin_auth_repository.recover_primary_admin(username, password)
-    except ConflictError:
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Username is already in use by another administrator.",
-                }
-            ),
-            409,
-        )
-    except ValueError as exc:
-        return jsonify({"success": False, "error": str(exc)}), 400
-    except RecoveryAlreadyUsedError:
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Primary administrator recovery has already been completed.",
-                }
-            ),
-            410,
-        )
-    except AdminNotFoundError:
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Primary administrator account not found.",
-                }
-            ),
-            404,
-        )
-    except DatabaseError:
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Primary administrator recovery failed due to a database error.",
-                }
-            ),
-            500,
-        )
-    except Exception:
-        logger.exception("Unexpected error during primary administrator recovery.")
-        return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": "Primary administrator recovery failed.",
-                }
-            ),
-            500,
-        )
-
-    logger.info("Primary administrator recovery completed for admin_id=1.")
-    return jsonify({"success": True, "admin": recovered}), 200
 
 
 @app.route("/api/admin/me", methods=["GET"])
